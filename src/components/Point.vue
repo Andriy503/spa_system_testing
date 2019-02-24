@@ -23,8 +23,7 @@ export default {
           toastr.success(response.data.success, response.data.message)
         })
         .catch(function (error) {
-          console.log('eerrrorrrr')
-          console.log(error)
+          console.log('error', error)
         })
     }
   }
