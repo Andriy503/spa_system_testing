@@ -6,6 +6,8 @@
 
 <script>
 import axios from 'axios'
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 
 export default {
   name: 'Point',
@@ -16,11 +18,12 @@ export default {
   },
   methods: {
     getTestUsers () {
-      axios.get('/user?ID=12345')
+      axios.get('http://system-testing/show')
         .then(function (response) {
-          console.log(response)
+          toastr.success(response.data.success, response.data.message)
         })
         .catch(function (error) {
+          console.log('eerrrorrrr')
           console.log(error)
         })
     }
