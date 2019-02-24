@@ -2,6 +2,12 @@
   <div class="wrapper">
     <button class="btn_getUsers" @click="getTestUsers">{{ btnNameGetUsers }}</button>
     <button class="btn_getUsers" @click="getStoreData">{{ storeBtnName }}</button>
+
+    <div class="auth">
+      <input type="text" placeholder="email" v-model="login">
+      <input type="text" placeholder="password" v-model="password">
+      <button @click="signin">Sign in</button>
+    </div>
   </div>
 </template>
 
@@ -15,7 +21,9 @@ export default {
   data () {
     return {
       btnNameGetUsers: 'Get Users',
-      storeBtnName: 'Get store variable'
+      storeBtnName: 'Get store variable',
+      login: '',
+      password: ''
     }
   },
   methods: {
@@ -31,6 +39,18 @@ export default {
     getStoreData () {
       let tmpUsers = this.$store.getters['user/getUsers']
       console.log(tmpUsers)
+    },
+    signin () {
+      api.singIn(this.login, this.password)
+        .then(function (response) {
+          let resJson = response.data.data
+
+          localStorage.setItem('token', resJson.token)
+          localStorage.setItem('adminUser', resJson.admin_user)
+        })
+        .catch(function (error) {
+          console.log('error', error)
+        })
     }
   }
 }
