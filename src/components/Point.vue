@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import axios from 'axios'
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
+import api from '@/api'
 
 export default {
   name: 'Point',
@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     getTestUsers () {
-      axios.get('http://system-testing/show')
+      api.getTestUsersAdmin()
         .then(function (response) {
           toastr.success(response.data.success, response.data.message)
         })

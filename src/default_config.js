@@ -1,5 +1,5 @@
 var params = {
-  serverName: 'this is backend name'
-};
+  serverName: 'http://system-testing/'
+}
 
-export default {params};
+export default params
