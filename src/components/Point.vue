@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
     <button class="btn_getUsers" @click="getTestUsers">{{ btnNameGetUsers }}</button>
+    <button class="btn_getUsers" @click="getStoreData">{{ storeBtnName }}</button>
   </div>
 </template>
 
@@ -13,7 +14,8 @@ export default {
   name: 'Point',
   data () {
     return {
-      btnNameGetUsers: 'Get Users'
+      btnNameGetUsers: 'Get Users',
+      storeBtnName: 'Get store variable'
     }
   },
   methods: {
@@ -25,6 +27,10 @@ export default {
         .catch(function (error) {
           console.log('error', error)
         })
+    },
+    getStoreData () {
+      let tmpUsers = this.$store.getters['user/getUsers']
+      console.log(tmpUsers)
     }
   }
 }
