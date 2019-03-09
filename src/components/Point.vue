@@ -37,16 +37,25 @@ export default {
         })
     },
     getStoreData () {
-      let tmpUsers = this.$store.getters['user/getUsers']
-      console.log(tmpUsers)
+      // let tmpUsers = this.$store.getters['user/getUsers']
+      api.testPostRequest()
+        .then(function (response) {
+          toastr.success(response.data.message)
+        })
     },
     signin () {
       api.singIn(this.login, this.password)
         .then(function (response) {
-          let resJson = response.data.data
+          if (response.data.success) {
+            let resJson = response.data.data
 
-          localStorage.setItem('token', resJson.token)
-          localStorage.setItem('adminUser', resJson.admin_user)
+            localStorage.setItem('token', resJson.token)
+            localStorage.setItem('adminUser', resJson.admin_user)
+
+            toastr.success('Success')
+          } else {
+            toastr.error(response.data.message)
+          }
         })
         .catch(function (error) {
           console.log('error', error)

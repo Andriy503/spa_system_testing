@@ -1,7 +1,7 @@
 const namespaced = true
 
 const state = {
-  isAutorized: true,
+  isAutorized: false,
   usersFixture: [
     {
       id: 1,

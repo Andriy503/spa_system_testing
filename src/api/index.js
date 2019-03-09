@@ -1,4 +1,5 @@
 import axios from 'axios'
+import toastr from 'toastr'
 // import store from '@/store'
 import config from '@/default_config'
 
@@ -20,11 +21,27 @@ axios.interceptors.request.use(function (config) {
   return Promise.reject(error)
 })
 
+axios.interceptors.response.use(function (response) {
+  // Do something with response data
+  return response
+}, function (error) {
+  toastr.error('You not authorization!')
+  if (error.response && error.response.status === 401) {
+    // store.dispatch('user/setIsAuthorized', false);
+    toastr.error('You not authorization!')
+  }
+
+  return Promise.reject(error)
+})
+
 export default {
   getTestUsersAdmin () {
-    return axios.get('show')
+    return axios.get('show.json')
   },
   singIn (login, password) {
-    return axios.post('users', {login, password})
+    return axios.post('users.json', {login, password})
+  },
+  testPostRequest () {
+    return axios.post('test.json')
   }
 }
