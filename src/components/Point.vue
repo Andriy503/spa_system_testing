@@ -7,6 +7,7 @@
       <input type="text" placeholder="email" v-model="login">
       <input type="text" placeholder="password" v-model="password">
       <button @click="signin">Sign in</button>
+
     </div>
   </div>
 </template>
@@ -15,6 +16,7 @@
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import api from '@/api'
+import '@/css/point.css'
 
 export default {
   name: 'Point',
@@ -64,16 +66,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .btn_getUsers {
-    padding: 10px;
-    margin-top: 5px;
-    margin-left: 5px;
-  }
-
-  .btn_getUsers:hover {
-    cursor: pointer;
-    background-color: cyan;
-  }
-</style>
