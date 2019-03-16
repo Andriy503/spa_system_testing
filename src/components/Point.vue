@@ -22,10 +22,10 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="#">Увійти</a>
+            <router-link class="nav-link" to="/login">Увійти</router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Реєстрація</a>
+            <router-link class="nav-link" to="/registration">Зареєструватися</router-link>
           </li>
         </ul>
       </div>
@@ -73,14 +73,6 @@ import '@/css/point.css'
 
 export default {
   name: 'Point',
-  mq: {
-    phone: '(max-width: 768px)',
-    tabletMin: '(min-width: 769px)',
-    tablet: '(max-width: 1088px)',
-    desktop: '(min-width: 1088px)',
-    widescreen: '(min-width: 1280px)',
-    fullhd: '(min-width: 1472px)'
-  },
   data () {
     return {
       btnNameGetUsers: 'Get Users',
@@ -104,24 +96,6 @@ export default {
       api.testPostRequest()
         .then(function (response) {
           toastr.success(response.data.message)
-        })
-    },
-    signin () {
-      api.singIn(this.login, this.password)
-        .then(function (response) {
-          if (response.data.success) {
-            let resJson = response.data.data
-
-            localStorage.setItem('token', resJson.token)
-            localStorage.setItem('adminUser', resJson.admin_user)
-
-            toastr.success('Success')
-          } else {
-            toastr.error(response.data.message)
-          }
-        })
-        .catch(function (error) {
-          console.log('error', error)
         })
     }
   },
