@@ -32,6 +32,8 @@
     </nav>
     <!-- end navs -->
 
+    <button @click="getTestUsers">TEST</button>
+
     <!-- slider -->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">

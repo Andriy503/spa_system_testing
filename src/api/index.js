@@ -38,8 +38,10 @@ export default {
   getTestUsersAdmin () {
     return axios.get('show.json')
   },
-  singIn (login, password) {
-    return axios.post('users.json', {login, password})
+  auth (formData, isRegistration) {
+    let url = (isRegistration) ? 'registration' : 'login'
+
+    return axios.post(url + '.json', formData)
   },
   testPostRequest () {
     return axios.post('test.json')

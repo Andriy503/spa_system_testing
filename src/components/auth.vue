@@ -18,17 +18,17 @@
               <div class="input-group-prepend" v-if="!isRegistration">
                 <span class="input-group-text"><i class="fas fa-user"></i></span>
               </div>
-              <input type="text" class="form-control" placeholder="Логін:" v-model="login" :disabled="disableForm">
+              <input type="text" class="form-control" placeholder="Логін:" v-model="form.login" :disabled="disableForm">
             </div>
 
             <!-- name -->
             <div class="input-group form-group" v-if="isRegistration">
-              <input type="text" class="form-control" placeholder="Ім'я:" v-model="password" :disabled="disableForm">
+              <input type="text" class="form-control" placeholder="Ім'я:" v-model="form.name" :disabled="disableForm">
             </div>
 
             <!-- surname -->
             <div class="input-group form-group" v-if="isRegistration">
-              <input type="text" class="form-control" placeholder="Прізвище:" v-model="password" :disabled="disableForm">
+              <input type="text" class="form-control" placeholder="Прізвище:" v-model="form.last_name" :disabled="disableForm">
             </div>
 
             <!-- password -->
@@ -36,17 +36,17 @@
               <div class="input-group-prepend" v-if="!isRegistration">
                 <span class="input-group-text"><i class="fas fa-key"></i></span>
               </div>
-              <input type="password" class="form-control" placeholder="Пароль:" v-model="password" :disabled="disableForm">
+              <input type="password" class="form-control" placeholder="Пароль:" v-model="form.password" :disabled="disableForm">
             </div>
 
             <!-- confirm password -->
             <div class="input-group form-group" v-if="isRegistration">
-              <input type="password" class="form-control" placeholder="Повторити пароль:" v-model="password" :disabled="disableForm">
+              <input type="password" class="form-control" placeholder="Повторити пароль:" v-model="form.retryPassword" :disabled="disableForm">
             </div>
 
             <!-- about -->
             <div class="input-group form-group" v-if="isRegistration">
-              <textarea class="form-control" rows="5" placeholder="Про себе..." :disabled="disableForm"></textarea>
+              <textarea class="form-control" rows="5" placeholder="Про себе..." :disabled="disableForm" v-model="form.about"></textarea>
             </div>
 
             <!-- remember me -->
@@ -90,13 +90,16 @@ export default {
   name: 'Point',
   data () {
     return {
-      // login: 'devExample2019@gmail.com',
-      // password: 'aUB.{RyjH>G9jv'
       isRegistration: false, // isRegistration - cheked url is registration
-      login: '',
-      password: '',
-      test: false,
-      disableForm: false
+      disableForm: false,
+      form: {
+        login: '',
+        password: '',
+        retryPassword: '',
+        name: '',
+        last_name: '',
+        about: ''
+      }
     }
   },
   methods: {
@@ -105,9 +108,21 @@ export default {
       this.disableForm = true
       let textBtn = (this.isRegistration) ? 'Зареєструватися' : 'Увійти'
 
+      if (!this.isRegistration) {
+        delete this.form.retryPassword
+        delete this.form.name
+        delete this.form.last_name
+        delete this.form.about
+      }
+
+      let onOffDisable = (isCheck = true) => {
+        signBtn.innerHTML = textBtn // add inner text
+        this.disableForm = isCheck // disable false
+      }
+
       signBtn.innerHTML = "<i class='fa fa-spinner fa-spin fa-fw'></i> " + textBtn
 
-      api.singIn(this.login, this.password)
+      api.auth(this.form, this.isRegistration)
         .then(function (response) {
           if (response.data.success) {
             let resJson = response.data.data
@@ -117,22 +132,19 @@ export default {
 
             toastr.success(response.data.message)
 
-            signBtn.innerHTML = textBtn // add inner text
-            this.disableForm = false // disable false
+            onOffDisable(false)
           } else {
             toastr.options.timeOut = 3000
             toastr.error(response.data.message)
 
-            signBtn.innerHTML = textBtn // add inner text
-            this.disableForm = false // disable false
+            onOffDisable(false)
           }
-        }.bind(this))
+        })
         .catch(function (error) {
           console.log('error', error)
 
-          signBtn.innerHTML = textBtn // add inner text
-          this.disableForm = false // disable false
-        }.bind(this))
+          onOffDisable(false)
+        })
     }
   },
   created () {
