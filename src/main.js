@@ -4,10 +4,19 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+// import config from '@/default_config'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.js'
 
 Vue.config.productionTip = false
+
+router.beforeResolve((to, from, next) => {
+  if (!to.name) {
+    next('/')
+  } else {
+    next()
+  }
+})
 
 /* eslint-disable no-new */
 new Vue({

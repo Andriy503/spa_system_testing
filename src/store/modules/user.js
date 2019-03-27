@@ -1,29 +1,48 @@
+import api from '@/api'
+import router from '@/router'
+
 const namespaced = true
 
 const state = {
-  isAutorized: false,
-  usersFixture: [
-    {
-      id: 1,
-      name: 'user1'
-    },
-    {
-      id: 2,
-      name: 'user2'
-    },
-    {
-      id: 3,
-      name: 'user3'
-    }
-  ]
+  isAuthorized: false
 }
 
-const getters = {
-  getUsers: state => state.usersFixture
+const actions = {
+  checkIsAuthorized ({state, commit}) {
+    return new Promise((resolve, reject) => {
+      api.getMe()
+        .then(res => {
+          if (res.data.data.user) {
+            commit('setIsAuthorized', true)
+            resolve(true)
+          } else {
+            resolve(false)
+          }
+        })
+        .catch(error2 => {
+          commit.setIsAuthorized(false)
+          resolve(false)
+          console.log('Error block catch, file store user action checkIsAuthorized!', error2)
+        })
+    })
+  },
+  authResponse ({state, commit}, isValue) {
+    commit('setIsAuthorized', isValue)
+  },
+  redirect ({state}, path) {
+    router.push(path)
+  }
+}
+
+const mutations = {
+  setIsAuthorized (state, isValue) {
+    state.isAuthorized = isValue
+  }
 }
 
 export default {
   namespaced,
   state,
-  getters
+  actions,
+  mutations
 }

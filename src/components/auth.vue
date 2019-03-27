@@ -84,6 +84,7 @@
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import api from '@/api'
+import store from '@/store'
 import '@/css/auth.css'
 
 export default {
@@ -128,7 +129,8 @@ export default {
             let resJson = response.data.data
 
             localStorage.setItem('token', resJson.token)
-            localStorage.setItem('adminUser', resJson.admin_user)
+            localStorage.setItem('adminUser', JSON.stringify(resJson.user))
+            store.dispatch('user/authResponse', true)
 
             toastr.success(response.data.message)
 

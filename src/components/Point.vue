@@ -20,7 +20,7 @@
       </div>
 
       <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav" v-if="checkAuth">
           <li class="nav-item">
             <router-link class="nav-link" to="/login">Увійти</router-link>
           </li>
@@ -28,11 +28,14 @@
             <router-link class="nav-link" to="/registration">Зареєструватися</router-link>
           </li>
         </ul>
+        <ul class="navbar-nav" v-else>
+          <li class="nav-item">
+            <span class="nav-link" @click="logout" id="logout">Вийти</span>
+          </li>
+        </ul>
       </div>
     </nav>
     <!-- end navs -->
-
-    <button @click="getTestUsers">TEST</button>
 
     <!-- slider -->
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -42,7 +45,7 @@
         <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
-        <button class="btn btn-success btn-lg" id="beginTest">Почати тестування</button>
+        <button class="btn btn-success btn-lg" id="beginTest" @click="beginTest()">Почати тестування</button>
         <div class="carousel-item active">
           <img src="@/assets/8.jpg" class="d-block w-100" alt="photo one">
         </div>
@@ -68,7 +71,10 @@
 </template>
 
 <script>
+
+import store from '@/store'
 import toastr from 'toastr'
+import _ from 'lodash'
 import 'toastr/build/toastr.min.css'
 import api from '@/api'
 import '@/css/point.css'
@@ -79,8 +85,7 @@ export default {
     return {
       btnNameGetUsers: 'Get Users',
       storeBtnName: 'Get store variable',
-      login: '',
-      password: ''
+      authUser: {}
     }
   },
   methods: {
@@ -99,10 +104,35 @@ export default {
         .then(function (response) {
           toastr.success(response.data.message)
         })
+    },
+    beginTest () {
+      this.$router.push('cabinet')
+      // api.test()
+      //   .then(function (response) {
+      //     toastr.success(response.data.message)
+      //   })
+    },
+    logout () {
+      api.logout()
+        .then(res => {
+          localStorage.removeItem('token')
+          localStorage.removeItem('adminUser')
+          store.dispatch('user/authResponse', false)
+
+          this.authUser = {}
+        })
+        .catch(rej => {
+          console.log('Помилка в блоці catch')
+        })
+    }
+  },
+  computed: {
+    checkAuth () {
+      return _.isEmpty(this.authUser)
     }
   },
   created () {
-
+    this.authUser = JSON.parse(localStorage.getItem('adminUser')) || {}
   }
 }
 </script>

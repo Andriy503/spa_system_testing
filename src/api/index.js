@@ -1,6 +1,6 @@
 import axios from 'axios'
-import toastr from 'toastr'
-// import store from '@/store'
+// import toastr from 'toastr'
+import store from '@/store'
 import config from '@/default_config'
 
 axios.defaults.baseURL = config.serverName
@@ -25,11 +25,8 @@ axios.interceptors.response.use(function (response) {
   // Do something with response data
   return response
 }, function (error) {
-  toastr.error('You not authorization!')
-  if (error.response && error.response.status === 401) {
-    // store.dispatch('user/setIsAuthorized', false);
-    toastr.error('You not authorization!')
-  }
+  store.dispatch('user/authResponse', false)
+  store.dispatch('user/redirect', 'login')
 
   return Promise.reject(error)
 })
@@ -45,5 +42,14 @@ export default {
   },
   testPostRequest () {
     return axios.post('test.json')
+  },
+  getMe () {
+    return axios.post('get_me.json')
+  },
+  logout () {
+    return axios.get('logout.json')
+  },
+  test () {
+    return axios.get('test.json')
   }
 }
