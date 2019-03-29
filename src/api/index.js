@@ -25,7 +25,10 @@ axios.interceptors.response.use(function (response) {
   // Do something with response data
   return response
 }, function (error) {
+  localStorage.removeItem('token')
+  localStorage.removeItem('adminUser')
   store.dispatch('user/authResponse', false)
+
   store.dispatch('user/redirect', 'login')
 
   return Promise.reject(error)
