@@ -56,5 +56,8 @@ export default {
   },
   test () {
     return axios.get('test.json')
+  },
+  getAllAdminUsers () {
+    return axios.get('getAdminUsers.json')
   }
 }

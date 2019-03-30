@@ -3,11 +3,14 @@
 
       <!-- Sidebar -->
       <div class="bg-light border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">Start Bootstrap </div>
+        <div class="sidebar-heading">
+          <img src="@/assets/admin_panel.png" width="40" class="admin_panel_icon">
+          <span>Адмін панель</span>
+        </div>
         <div class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')">Дадати питання</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')">Додати відповіді</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAdminUsers')" v-if="authUser.role_id === 1">Користувачі</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')"><i class="fas fa-plus-square"></i> Додати питання</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')"><i class="fas fa-plus-circle"></i> Додати відповіді</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAdminUsers')" v-if="authUser.role_id === 1"><i class="fas fa-users"></i> Користувачі</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')">Тестове</a>
         </div>
       </div>

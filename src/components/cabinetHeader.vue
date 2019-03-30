@@ -29,6 +29,9 @@
                 <a class="dropdown-item" href="#">Something else here</a>
               </div>
             </li>
+            <li class="nav-item">
+              <span class="nav-link">{{ getNameUser }}</span>
+            </li>
           </ul>
         </div>
       </nav>
@@ -45,7 +48,7 @@
 
 <script>
 
-// import store from '@/store'
+import store from '@/store'
 // import toastr from 'toastr'
 // import _ from 'lodash'
 // import 'toastr/build/toastr.min.css'
@@ -56,6 +59,11 @@ export default {
   name: 'cabinetHeader',
   methods: {
     togleMenu () { document.getElementById('wrapper_bar').classList.toggle('toggled') } // toogle slimSideBar
+  },
+  computed: {
+    getNameUser () {
+      return store.state.user.authUser.name
+    }
   }
 }
 </script>
