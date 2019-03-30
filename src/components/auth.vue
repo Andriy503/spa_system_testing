@@ -123,14 +123,22 @@ export default {
 
       signBtn.innerHTML = "<i class='fa fa-spinner fa-spin fa-fw'></i> " + textBtn
 
+      var that = this
+
       api.auth(this.form, this.isRegistration)
         .then(function (response) {
           if (response.data.success) {
             let resJson = response.data.data
 
-            localStorage.setItem('token', resJson.token)
-            localStorage.setItem('adminUser', JSON.stringify(resJson.user))
-            store.dispatch('user/authResponse', true)
+            if (resJson) {
+              localStorage.setItem('token', resJson.token)
+              localStorage.setItem('adminUser', JSON.stringify(resJson.user))
+
+              store.commit('user/fillAuthUser', resJson.user)
+              store.dispatch('user/authResponse', true)
+
+              that.$router.push('cabinet')
+            }
 
             toastr.success(response.data.message)
 

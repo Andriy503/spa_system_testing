@@ -27,7 +27,9 @@ axios.interceptors.response.use(function (response) {
 }, function (error) {
   localStorage.removeItem('token')
   localStorage.removeItem('adminUser')
+
   store.dispatch('user/authResponse', false)
+  store.commit('user/fillAuthUser', {})
 
   store.dispatch('user/redirect', 'login')
 

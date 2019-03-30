@@ -5,7 +5,9 @@
     </div>
 
     <div class="cab_wrapper" v-if="!preloader">
-      <h1>Cabinet</h1>
+      <cabinetHeader></cabinetHeader>
+
+      <slimSideBar></slimSideBar>
     </div>
   </div>
 </template>
@@ -17,17 +19,14 @@
 // import api from '@/api'
 import store from '@/store'
 import '@/css/preloader.css'
+import slimSideBar from '@/components/slimSideBar'
+import cabinetHeader from '@/components/cabinetHeader'
 
 export default {
   name: 'Cabinet',
   data () {
     return {
       preloader: true
-    }
-  },
-  methods: {
-    cheked () {
-      store.commit('user/ccc')
     }
   },
   created () {
@@ -42,6 +41,10 @@ export default {
     } else {
       this.preloader = false
     }
+  },
+  components: {
+    slimSideBar,
+    cabinetHeader
   }
 }
 </script>

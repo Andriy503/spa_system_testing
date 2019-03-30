@@ -4,7 +4,8 @@ import router from '@/router'
 const namespaced = true
 
 const state = {
-  isAuthorized: false
+  isAuthorized: false,
+  authUser: {}
 }
 
 const actions = {
@@ -14,6 +15,8 @@ const actions = {
         .then(res => {
           if (res.data.data.user) {
             commit('setIsAuthorized', true)
+            commit('fillAuthUser', res.data.data.user)
+
             resolve(true)
           } else {
             resolve(false)
@@ -37,6 +40,9 @@ const actions = {
 const mutations = {
   setIsAuthorized (state, isValue) {
     state.isAuthorized = isValue
+  },
+  fillAuthUser (state, user) {
+    state.authUser = user
   }
 }
 

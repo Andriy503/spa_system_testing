@@ -73,9 +73,9 @@
 <script>
 
 import store from '@/store'
-import toastr from 'toastr'
-import _ from 'lodash'
-import 'toastr/build/toastr.min.css'
+// import toastr from 'toastr'
+import isEmpty from 'lodash/isEmpty'
+// import 'toastr/build/toastr.min.css'
 import api from '@/api'
 import '@/css/point.css'
 
@@ -89,34 +89,16 @@ export default {
     }
   },
   methods: {
-    getTestUsers () {
-      api.getTestUsersAdmin()
-        .then(function (response) {
-          toastr.success(response.data.success, response.data.message)
-        })
-        .catch(function (error) {
-          console.log('error', error)
-        })
-    },
-    getStoreData () {
-      // let tmpUsers = this.$store.getters['user/getUsers']
-      api.testPostRequest()
-        .then(function (response) {
-          toastr.success(response.data.message)
-        })
-    },
     beginTest () {
       this.$router.push('cabinet')
-      // api.test()
-      //   .then(function (response) {
-      //     toastr.success(response.data.message)
-      //   })
     },
     logout () {
       api.logout()
         .then(res => {
           localStorage.removeItem('token')
           localStorage.removeItem('adminUser')
+
+          store.commit('user/fillAuthUser', {})
           store.dispatch('user/authResponse', false)
 
           this.authUser = {}
@@ -128,7 +110,7 @@ export default {
   },
   computed: {
     checkAuth () {
-      return _.isEmpty(this.authUser)
+      return isEmpty(this.authUser)
     }
   },
   created () {
