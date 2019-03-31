@@ -42,9 +42,9 @@
               </select>
 
               <!-- Кафедри -->
-              <select class="form-control form-group" id="sel2" v-if="this.showDepartaments.length">
+              <select class="form-control form-group" id="sel2" v-if="this.showDepartaments.length" v-on:change="selectDepartament">
                 <option value="" disabled selected>Кафедра</option>
-                <option v-for="(item, index) in showDepartaments" :key="index">{{ item.title }}</option>
+                <option v-for="(item, index) in showDepartaments" :key="index" :value="item.id">{{ item.title }}</option>
               </select>
             </div>
 
@@ -117,7 +117,9 @@ export default {
         retryPassword: '',
         name: '',
         last_name: '',
-        about: ''
+        about: '',
+        idEducation: -1,
+        idDepartament: false
       },
       spinner_select: false,
       educations: [],
@@ -136,6 +138,8 @@ export default {
         delete this.form.name
         delete this.form.last_name
         delete this.form.about
+        delete this.form.idEducation
+        delete this.form.idDepartament
       }
 
       let onOffDisable = (isCheck = true) => {
@@ -192,10 +196,13 @@ export default {
         })
     },
     selectEducations (event) {
-      let idEducation = parseInt(event.target.options[event.target.selectedIndex].value)
+      this.form.idEducation = parseInt(event.target.options[event.target.selectedIndex].value)
+      let sel2 = document.getElementById('sel2')
+
+      if (sel2) { sel2.options.selectedIndex = 0 } // reset index 2 select
 
       this.showDepartaments = this.departaments.map(item => {
-        if (item.id_educations === idEducation) {
+        if (item.id_educations === this.form.idEducation) {
           return item
         }
 
@@ -203,6 +210,9 @@ export default {
       }).filter(itemDeep => {
         return itemDeep
       })
+    },
+    selectDepartament (event) {
+      this.form.idDepartament = parseInt(event.target.options[event.target.selectedIndex].value)
     }
   },
   created () {
