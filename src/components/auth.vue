@@ -31,6 +31,23 @@
               <input type="text" class="form-control" placeholder="Прізвище:" v-model="form.last_name" :disabled="disableForm">
             </div>
 
+            <!-- Навчальна підрозділи -->
+            <div v-if="isRegistration">
+              <span class="input-group-addon" v-if="spinner_select">
+                  <i class="fa fa-refresh fa-spin" style="color: white;"></i>
+              </span>
+              <select class="form-control form-group" id="sel1" v-on:change="selectEducations">
+                <option value="" disabled selected>Навчальний підрозділ</option>
+                <option v-for="(item, index) in educations" :key="index" :value="item.id">{{ item.title }}</option>
+              </select>
+
+              <!-- Кафедри -->
+              <select class="form-control form-group" id="sel2" v-if="this.showDepartaments.length">
+                <option value="" disabled selected>Кафедра</option>
+                <option v-for="(item, index) in showDepartaments" :key="index">{{ item.title }}</option>
+              </select>
+            </div>
+
             <!-- password -->
             <div class="input-group form-group">
               <div class="input-group-prepend" v-if="!isRegistration">
@@ -68,6 +85,7 @@
             </div>
 
           </form>
+
         </div>
         <div class="card-footer" v-if="!isRegistration">
           <div class="d-flex justify-content-center">
@@ -100,7 +118,11 @@ export default {
         name: '',
         last_name: '',
         about: ''
-      }
+      },
+      spinner_select: false,
+      educations: [],
+      departaments: [],
+      showDepartaments: []
     }
   },
   methods: {
@@ -155,10 +177,38 @@ export default {
 
           onOffDisable(false)
         })
+    },
+    getEducations () {
+      api.getEducations()
+        .then(res => {
+          this.educations = res.data.data.educations
+          this.departaments = res.data.data.departaments
+
+          this.spinner_select = false
+        })
+        .catch(error2 => {
+          this.spinner_select = false
+          console.log('Помилка в блоці catch file auth function getEducations')
+        })
+    },
+    selectEducations (event) {
+      let idEducation = parseInt(event.target.options[event.target.selectedIndex].value)
+
+      this.showDepartaments = this.departaments.map(item => {
+        if (item.id_educations === idEducation) {
+          return item
+        }
+
+        return false
+      }).filter(itemDeep => {
+        return itemDeep
+      })
     }
   },
   created () {
     if (location.hash === '#/registration') {
+      this.spinner_select = true
+      this.getEducations()
       this.isRegistration = true
     }
   }
