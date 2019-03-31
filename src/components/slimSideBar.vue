@@ -43,7 +43,7 @@ export default {
       myComponents: {
         addQuestions: false,
         addAnswers: false,
-        addAdminUsers: false
+        addAdminUsers: true
       },
       authUser: {}
     }

@@ -62,5 +62,8 @@ export default {
   },
   getEducations () {
     return axios.get('getEducations.json')
+  },
+  verifiedAdminUser (userId) {
+    return axios.get('verifiedAdminUser.json?' + 'userId=' + userId)
   }
 }
