@@ -61,7 +61,7 @@
             <i class="fas fa-trash-alt" style="color: red;"></i>
           </td>
           <td v-else>
-            <i class="fas fa-trash-alt"></i>
+            <i class="fas fa-trash-alt" @click="activeUser = user" data-target="#myModal" data-toggle="modal"></i>
           </td>
 
         </tr>
@@ -90,6 +90,33 @@
       </div>
     </div>
 
+    <!-- delete user -->
+    <!-- The Modal -->
+    <div class="modal" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header ">
+            <h4 class="modal-title text-secondary">Видалення користувача</h4>
+          </div>
+
+          <!-- Modal body -->
+          <div class="modal-body text-center">
+            <img src="https://img.icons8.com/cotton/2x/cancel--v1.png" class="mx-auto d-block" alt="видалення користувача" width="200">
+            <span class="text-secondary">Ви впевнені що хочете видалити?</span>
+          </div>
+
+          <!-- Modal footer -->
+          <div class="modal-footer mx-auto d-block">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрити</button>
+            <button type="button" class="btn btn-danger" data-loading-text="<i class='fa fa-spinner fa-spin fa-fw' aria-hidden='true'></i>" @click="deleteUser">Видалити</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -110,7 +137,8 @@ export default {
     return {
       adminUsers: [],
       pre_loader: true,
-      activeUser: {}
+      activeUser: {},
+      showModalDeleteUser: true
     }
   },
   methods: {
@@ -138,6 +166,21 @@ export default {
         .catch(error2 => {
           toastr.error('Помилка сервера')
           console.log('помилка в блоці catch function verifiedUser')
+        })
+    },
+    deleteUser (e) {
+      let nativeText = e.target.innerHTML
+      e.target.innerHTML = "<i class='fa fa-spinner fa-spin fa-fw'></i>"
+
+      api.deleteAdminUser(this.activeUser.id)
+        .then(res => {
+          this.getAdminUsers()
+
+          toastr.info(res.data.message)
+          e.target.innerHTML = nativeText
+        })
+        .catch(resErr => {
+          console.log('Помилка в блоці catch function deleteUser', resErr)
         })
     }
   },

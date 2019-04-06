@@ -65,5 +65,8 @@ export default {
   },
   verifiedAdminUser (userId) {
     return axios.get('verifiedAdminUser.json?' + 'userId=' + userId)
+  },
+  deleteAdminUser (userId) {
+    return axios.get('deleteUser.json?' + 'userId=' + userId)
   }
 }
