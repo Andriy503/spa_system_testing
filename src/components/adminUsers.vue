@@ -129,7 +129,6 @@ import toastr from 'toastr'
 import api from '@/api'
 import '@/css/preloader_cab.css'
 import '@/css/admin_users.css'
-import verModal from '@/components/modals/verAdminUsers'
 
 export default {
   name: 'adminUsers',
@@ -187,9 +186,6 @@ export default {
   created () {
     this.getAdminUsers()
     // спеціальнісь - факульткт
-  },
-  components: {
-    verModal
   }
 }
 </script>

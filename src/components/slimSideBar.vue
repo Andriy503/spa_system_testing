@@ -8,7 +8,7 @@
           <span>Адмін панель</span>
         </div>
         <div class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')"><i class="fas fa-plus-square"></i> Додати балет</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addTickets')"><i class="fas fa-ticket-alt"></i> Додати білет</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')"><i class="fas fa-plus-square"></i> Додати питання</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')"><i class="fas fa-plus-circle"></i> Додати відповіді</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAdminUsers')" v-if="authUser.role_id === 1"><i class="fas fa-users"></i> Користувачі</a>
@@ -20,6 +20,7 @@
       <addQuestions v-if="myComponents.addQuestions"></addQuestions>
       <addAnswers v-if="myComponents.addAnswers"></addAnswers>
       <adminUsers v-if="myComponents.addAdminUsers"></adminUsers>
+      <addTickets v-if="myComponents.addTickets"></addTickets>
 
     </div>
 </template>
@@ -36,6 +37,7 @@ import isEmpty from 'lodash/isEmpty'
 import addQuestions from '@/components/addQuestions'
 import addAnswers from '@/components/addAnswers'
 import adminUsers from '@/components/adminUsers'
+import addTickets from '@/components/addTickets'
 
 export default {
   name: 'slimSideBar',
@@ -44,7 +46,8 @@ export default {
       myComponents: {
         addQuestions: false,
         addAnswers: false,
-        addAdminUsers: true
+        addAdminUsers: true,
+        addTickets: false
       },
       authUser: {}
     }
@@ -73,7 +76,8 @@ export default {
   components: {
     addQuestions,
     addAnswers,
-    adminUsers
+    adminUsers,
+    addTickets
   }
 }
 </script>
