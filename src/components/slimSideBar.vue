@@ -8,6 +8,7 @@
           <span>Адмін панель</span>
         </div>
         <div class="list-group list-group-flush">
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'educations')"><i class="fas fa-university"></i> Навчальні піздрозділи</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addTickets')"><i class="fas fa-ticket-alt"></i> Додати білет</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')"><i class="fas fa-plus-square"></i> Додати питання</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')"><i class="fas fa-plus-circle"></i> Додати відповіді</a>
@@ -21,6 +22,7 @@
       <addAnswers v-if="myComponents.addAnswers"></addAnswers>
       <adminUsers v-if="myComponents.addAdminUsers"></adminUsers>
       <addTickets v-if="myComponents.addTickets"></addTickets>
+      <educations v-if="myComponents.educations"></educations>
 
     </div>
 </template>
@@ -38,6 +40,7 @@ import addQuestions from '@/components/addQuestions'
 import addAnswers from '@/components/addAnswers'
 import adminUsers from '@/components/adminUsers'
 import addTickets from '@/components/addTickets'
+import educations from '@/components/educations'
 
 export default {
   name: 'slimSideBar',
@@ -46,8 +49,9 @@ export default {
       myComponents: {
         addQuestions: false,
         addAnswers: false,
-        addAdminUsers: true,
-        addTickets: false
+        addAdminUsers: false,
+        addTickets: false,
+        educations: true
       },
       authUser: {}
     }
@@ -77,7 +81,8 @@ export default {
     addQuestions,
     addAnswers,
     adminUsers,
-    addTickets
+    addTickets,
+    educations
   }
 }
 </script>

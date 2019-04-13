@@ -1,25 +1,8 @@
 <template>
-  <div class="admin_users">
-    <div class="container" v-if="pre_loader">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="loader">
-                  <div class="loader-inner">
-                      <div class="loading one"></div>
-                  </div>
-                  <div class="loader-inner">
-                      <div class="loading two"></div>
-                  </div>
-                  <div class="loader-inner">
-                      <div class="loading three"></div>
-                  </div>
-                  <div class="loader-inner">
-                      <div class="loading four"></div>
-                  </div>
-              </div>
-          </div>
-      </div>
-    </div>
+  <div class="admin_users w-100">
+
+    <preLoader v-if="pre_loader"></preLoader>
+
     <!-- start table -->
     <table class="table table-striped" v-else>
       <thead>
@@ -127,7 +110,7 @@ import toastr from 'toastr'
 // import _ from 'lodash'
 // import 'toastr/build/toastr.min.css'
 import api from '@/api'
-import '@/css/preloader_cab.css'
+import preLoader from '@/components/preLoader'
 import '@/css/admin_users.css'
 
 export default {
@@ -147,8 +130,8 @@ export default {
           this.adminUsers = res.data.data.adminUsers
           this.pre_loader = false
         })
-        .catch(error2 => {
-          console.log('Сталась помилка файл adminUsers ', error2)
+        .catch(resErr => {
+          console.log('Сталась помилка файл adminUsers ', resErr)
         })
     },
     verifiedUser () {
@@ -162,9 +145,9 @@ export default {
             toastr.error(res.data.message)
           }
         })
-        .catch(error2 => {
+        .catch(resErr => {
           toastr.error('Помилка сервера')
-          console.log('помилка в блоці catch function verifiedUser')
+          console.log('помилка в блоці catch function verifiedUser', resErr)
         })
     },
     deleteUser (e) {
@@ -186,6 +169,9 @@ export default {
   created () {
     this.getAdminUsers()
     // спеціальнісь - факульткт
+  },
+  components: {
+    preLoader
   }
 }
 </script>

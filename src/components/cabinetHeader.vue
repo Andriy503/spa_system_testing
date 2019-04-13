@@ -4,7 +4,8 @@
     <div id="page-content-wrapper">
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <button class="btn btn-primary" id="menu-toggle" @click="togleMenu()">Перемикання меню</button>
+        <button class="btn btn-primary" id="menu-toggle" @click="togleMenu()" v-if="!isShowDepartamentPage">Перемикання меню</button>
+        <button class="btn btn-success" v-if="isShowDepartamentPage" @click="$emit('modalAddDep')" data-toggle="modal" data-target="#exampleModalCenter">Додати кафедру</button>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -32,6 +33,9 @@
             <li class="nav-item">
               <span class="nav-link">{{ getNameUser }}</span>
             </li>
+            <li class="nav-item">
+              <span class="nav-link" @click="logout">Вийти</span>
+            </li>
           </ul>
         </div>
       </nav>
@@ -52,13 +56,35 @@ import store from '@/store'
 // import toastr from 'toastr'
 // import _ from 'lodash'
 // import 'toastr/build/toastr.min.css'
-// import api from '@/api'
+import api from '@/api'
 import '@/css/slim_side_bar.css'
 
 export default {
   name: 'cabinetHeader',
+  props: {
+    isShowDepartamentPage: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
   methods: {
-    togleMenu () { document.getElementById('wrapper_bar').classList.toggle('toggled') } // toogle slimSideBar
+    togleMenu () { document.getElementById('wrapper_bar').classList.toggle('toggled') }, // toogle slimSideBar,
+    logout () {
+      api.logout()
+        .then(res => {
+          localStorage.removeItem('token')
+          localStorage.removeItem('adminUser')
+
+          store.commit('user/fillAuthUser', {})
+          store.dispatch('user/authResponse', false)
+
+          this.$router.push('/')
+        })
+        .catch(rej => {
+          console.log('Помилка в блоці catch fucntion logout')
+        })
+    }
   },
   computed: {
     getNameUser () {

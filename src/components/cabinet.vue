@@ -16,7 +16,7 @@
 
 // import toastr from 'toastr'
 // import 'toastr/build/toastr.min.css'
-// import api from '@/api'
+import api from '@/api'
 import store from '@/store'
 import '@/css/preloader.css'
 import slimSideBar from '@/components/slimSideBar'
@@ -27,6 +27,19 @@ export default {
   data () {
     return {
       preloader: true
+    }
+  },
+  methods: {
+    getEducAndDepat () {
+      return new Promise((resolve, reject) => {
+        api.getEducations()
+          .then(res => {
+            resolve(res)
+          })
+          .catch(resErr => {
+            console.log('Помилка в блоці catch function getEducAndDepat', resErr)
+          })
+      })
     }
   },
   created () {
@@ -41,6 +54,13 @@ export default {
     } else {
       this.preloader = false
     }
+
+    this.getEducAndDepat()
+      .then(res => {
+        let data = res.data.data
+
+        store.commit('general/updateEducations', data.educations)
+      })
   },
   components: {
     slimSideBar,

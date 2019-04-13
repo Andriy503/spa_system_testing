@@ -68,5 +68,29 @@ export default {
   },
   deleteAdminUser (userId) {
     return axios.get('deleteUser.json?' + 'userId=' + userId)
+  },
+  getTickets () {
+    return axios.get('getTickets.json')
+  },
+  updateEducation (data) {
+    return axios.post('updateEducation.json', data)
+  },
+  addEducation (data) {
+    return axios.post('addEducation.json', data)
+  },
+  deleteEducation (data) {
+    return axios.post('deleteEducation.json', data)
+  },
+  getFixedDepartaments (educationId) {
+    return axios.get('getFixedDepartaments.json?' + 'educationId=' + educationId)
+  },
+  addDepartament (data) {
+    return axios.post('addDepartament.json', data)
+  },
+  editDepartament (data) {
+    return axios.post('updateDepartament.json', data)
+  },
+  deleteDepartament (data) {
+    return axios.post('deleteDepartament.json', data)
   }
 }
