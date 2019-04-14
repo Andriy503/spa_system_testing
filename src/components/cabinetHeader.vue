@@ -5,6 +5,10 @@
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
         <button class="btn btn-primary" id="menu-toggle" @click="togleMenu()" v-if="!isShowDepartamentPage">Перемикання меню</button>
+        <router-link to="/cabinet">
+          <button class="btn btn-info" id="backToCabinet" v-if="isShowDepartamentPage">Повернутись назад</button>
+        </router-link>
+
         <button class="btn btn-success" v-if="isShowDepartamentPage" @click="$emit('modalAddDep')" data-toggle="modal" data-target="#exampleModalCenter">Додати кафедру</button>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,6 +62,7 @@ import store from '@/store'
 // import 'toastr/build/toastr.min.css'
 import api from '@/api'
 import '@/css/slim_side_bar.css'
+import '@/css/header.css'
 
 export default {
   name: 'cabinetHeader',

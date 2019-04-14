@@ -8,7 +8,7 @@
         <cabinetHeader isShowDepartamentPage @modalAddDep="selectDepartament({})"></cabinetHeader>
 
         <h1 class="display-1 educationTitle">{{ this.education.title }}</h1>
-        <h3 v-if="!departaments.length" class="text-center nothingDepartament">Немає факультетів</h3>
+        <h3 v-if="!departaments.length" class="text-center nothingDepartament">Немає кафедр</h3>
 
         <table class="table" v-else>
           <thead>
@@ -182,6 +182,8 @@ export default {
           if (res.data.success) {
             let index = this.departaments.findIndex(item => item.id === this.activeDepartament.id)
             this.departaments[index] = res.data.data.departament
+
+            toastr.success(res.data.message)
           }
 
           this.btnLoader = false
