@@ -9,9 +9,10 @@
         </div>
         <div class="list-group list-group-flush">
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'educations')"><i class="fas fa-university"></i> Навчальні піздрозділи</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addTickets')"><i class="fas fa-ticket-alt"></i> Додати білет</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')"><i class="fas fa-plus-square"></i> Додати питання</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')"><i class="fas fa-plus-circle"></i> Додати відповіді</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'cpecialty')" v-if="authUser.role_id === 1"><i class="fas fa-graduation-cap"></i> Спеціальності</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addTickets')"><i class="fas fa-ticket-alt"></i> Білети</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')"><i class="fas fa-plus-square"></i> Екзаменаційні питання</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')"><i class="fas fa-plus-circle"></i> Екзаменаційні відповіді</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAdminUsers')" v-if="authUser.role_id === 1"><i class="fas fa-users"></i> Користувачі</a>
         </div>
       </div>
@@ -22,6 +23,7 @@
       <adminUsers v-if="myComponents.addAdminUsers"></adminUsers>
       <addTickets v-if="myComponents.addTickets"></addTickets>
       <educations v-if="myComponents.educations"></educations>
+      <cpecialty v-if="myComponents.cpecialty"></cpecialty>
 
     </div>
 </template>
@@ -40,6 +42,7 @@ import addAnswers from '@/components/addAnswers'
 import adminUsers from '@/components/adminUsers'
 import addTickets from '@/components/addTickets'
 import educations from '@/components/educations'
+import cpecialty from '@/components/cpecialty'
 
 export default {
   name: 'slimSideBar',
@@ -50,7 +53,8 @@ export default {
         addAnswers: false,
         addAdminUsers: false,
         addTickets: false,
-        educations: true
+        educations: false,
+        cpecialty: true
       },
       authUser: {}
     }
@@ -81,7 +85,8 @@ export default {
     addAnswers,
     adminUsers,
     addTickets,
-    educations
+    educations,
+    cpecialty
   }
 }
 </script>

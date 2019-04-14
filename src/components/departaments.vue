@@ -74,7 +74,7 @@
             <div class="modal-content">
               <!-- Modal body -->
               <div class="modal-body text-center">
-                <img src="https://img.icons8.com/cotton/2x/cancel--v1.png" class="mx-auto d-block" alt="видалення користувача" width="200">
+                <img src="@/assets/deleteModal.png" class="mx-auto d-block" alt="видалення користувача" width="200">
                 <span class="text-secondary">Ви впевнені що хочете видалити?</span>
               </div>
 

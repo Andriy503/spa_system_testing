@@ -60,6 +60,7 @@ export default {
         let data = res.data.data
 
         store.commit('general/updateEducations', data.educations)
+        store.commit('general/updateDepartament', data.departaments)
       })
   },
   components: {

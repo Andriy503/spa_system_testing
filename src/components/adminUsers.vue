@@ -15,8 +15,7 @@
           <th scope="col">Роль</th>
           <!-- <th scope="col">Підрозділ</th> -->
           <th scope="col">Кафедра</th>
-          <th scope="col">Ver</th>
-          <th scope="col">Delete</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -31,20 +30,9 @@
           <!-- <td>{{ (user.id_education) ? user.educational_subdivision.title : '-' }}</td> -->
           <td>{{ (user.id_departament) ? user.departament.title : '-' }}</td>
 
-          <!-- ver user -->
-          <td v-if="user.is_ver">
-            <i class="fas fa-user-check" data-toggle="modal" data-target="#exampleModalCenter" style="color: green;" @click="activeUser = user"></i>
-          </td>
-          <td v-else>
-            <i class="fas fa-user" data-toggle="modal" data-target="#exampleModalCenter" @click="activeUser = user"></i>
-          </td>
-
-          <!-- delete user -->
-          <td v-if="user.is_delete">
-            <i class="fas fa-trash-alt" style="color: red;"></i>
-          </td>
-          <td v-else>
-            <i class="fas fa-trash-alt" @click="activeUser = user" data-target="#myModal" data-toggle="modal"></i>
+          <td style="display: flex;">
+            <i class="fas fa-user-check" data-toggle="modal" :class="{'active': !user.is_ver}" data-target="#exampleModalCenter" style="color: green; margin-right: 10px;" @click="activeUser = user"></i>
+            <i class="fas fa-trash-alt" style="color: red;" @click="activeUser = user" data-target="#myModal" data-toggle="modal"></i>
           </td>
 
         </tr>
@@ -86,7 +74,7 @@
 
           <!-- Modal body -->
           <div class="modal-body text-center">
-            <img src="https://img.icons8.com/cotton/2x/cancel--v1.png" class="mx-auto d-block" alt="видалення користувача" width="200">
+            <img src="@/assets/deleteModal.png" class="mx-auto d-block" alt="видалення користувача" width="200">
             <span class="text-secondary">Ви впевнені що хочете видалити?</span>
           </div>
 

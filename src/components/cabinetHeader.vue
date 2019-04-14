@@ -57,10 +57,8 @@
 <script>
 
 import store from '@/store'
-// import toastr from 'toastr'
-// import _ from 'lodash'
-// import 'toastr/build/toastr.min.css'
 import api from '@/api'
+
 import '@/css/slim_side_bar.css'
 import '@/css/header.css'
 

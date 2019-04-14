@@ -3,7 +3,6 @@
 
     <!-- pre loader -->
     <preLoader v-if="preLoader"></preLoader>
-    <!-- end pre loader -->
 
     <div class="content_tickets" v-else>
       <!-- table tickets -->

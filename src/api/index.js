@@ -92,5 +92,17 @@ export default {
   },
   deleteDepartament (data) {
     return axios.post('deleteDepartament.json', data)
+  },
+  getSpecialtyForIdDepartament (data) {
+    return axios.post('getSpecialtyForIdDepartament.json', data)
+  },
+  addSpecialty (data) {
+    return axios.post('addSpecialty.json', data)
+  },
+  editSpecialty (data) {
+    return axios.post('editSpecialty.json', data)
+  },
+  deleteSpecialty (data) {
+    return axios.post('deleteSpecialty.json', data)
   }
 }
