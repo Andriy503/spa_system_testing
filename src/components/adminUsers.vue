@@ -30,9 +30,9 @@
           <!-- <td>{{ (user.id_education) ? user.educational_subdivision.title : '-' }}</td> -->
           <td>{{ (user.id_departament) ? user.departament.title : '-' }}</td>
 
-          <td style="display: flex;">
+          <td class="actions">
             <i class="fas fa-user-check" data-toggle="modal" :class="{'active': !user.is_ver}" data-target="#exampleModalCenter" style="color: green; margin-right: 10px;" @click="activeUser = user"></i>
-            <i class="fas fa-trash-alt" style="color: red;" @click="activeUser = user" data-target="#myModal" data-toggle="modal"></i>
+            <i class="fas fa-trash-alt" title="Видалити" style="color: red;" @click="activeUser = user" data-target="#myModal" data-toggle="modal"></i>
           </td>
 
         </tr>
@@ -156,7 +156,6 @@ export default {
   },
   created () {
     this.getAdminUsers()
-    // спеціальнісь - факульткт
   },
   components: {
     preLoader
