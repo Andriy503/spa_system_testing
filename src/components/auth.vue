@@ -1,7 +1,7 @@
 <template>
   <div class="auth">
     <div class="d-flex justify-content-center h-100">
-      <div class="card">
+      <div class="card-auth">
         <div class="card-header">
           <h3>{{ (this.isRegistration) ? 'Реєстрація' : 'Увійти' }}</h3>
           <div class="d-flex justify-content-end social_icon">

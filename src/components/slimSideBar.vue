@@ -52,9 +52,9 @@ export default {
         addQuestions: false,
         addAnswers: false,
         addAdminUsers: false,
-        addTickets: false,
+        addTickets: true,
         educations: false,
-        cpecialty: true
+        cpecialty: false
       },
       authUser: {}
     }

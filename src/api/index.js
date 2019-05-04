@@ -70,7 +70,7 @@ export default {
     return axios.get('deleteUser.json?' + 'userId=' + userId)
   },
   getTickets () {
-    return axios.get('getTickets.json')
+    return axios.get('tickets.json')
   },
   updateEducation (data) {
     return axios.post('updateEducation.json', data)

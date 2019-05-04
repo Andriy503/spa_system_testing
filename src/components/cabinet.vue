@@ -61,6 +61,7 @@ export default {
 
         store.commit('general/updateEducations', data.educations)
         store.commit('general/updateDepartament', data.departaments)
+        store.commit('general/specialtyDepartament', data.specialty)
       })
   },
   components: {

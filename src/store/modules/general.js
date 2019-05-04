@@ -5,7 +5,8 @@ const namespaced = true
 
 const state = {
   educations: [],
-  departaments: []
+  departaments: [],
+  specialty: []
 }
 
 const actions = {
@@ -24,6 +25,9 @@ const mutations = {
   },
   updateDepartament (state, data) {
     state.departaments = data
+  },
+  specialtyDepartament (state, data) {
+    state.specialty = data
   }
 }
 
