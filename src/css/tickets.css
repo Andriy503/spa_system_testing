@@ -31,7 +31,7 @@
   margin-bottom: 10px;
 }
 
-.card-body {
+.card-body-cust{
   display: flex;
 }
 
@@ -45,5 +45,5 @@
 
 .ticket-actions > i:hover {
   cursor: pointer;
-  color: #3f3f3f;
+  color: #3f3f3f
 }

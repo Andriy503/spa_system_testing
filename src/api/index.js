@@ -69,9 +69,6 @@ export default {
   deleteAdminUser (userId) {
     return axios.get('deleteUser.json?' + 'userId=' + userId)
   },
-  getTickets () {
-    return axios.get('tickets.json')
-  },
   updateEducation (data) {
     return axios.post('updateEducation.json', data)
   },
@@ -104,5 +101,11 @@ export default {
   },
   deleteSpecialty (data) {
     return axios.post('deleteSpecialty.json', data)
+  },
+  getTickets (specialtyId) {
+    return axios.get('getTickets.json?specialtyId=' + specialtyId)
+  },
+  addTicket (data) {
+    return axios.post('addTicket.json', data)
   }
 }
