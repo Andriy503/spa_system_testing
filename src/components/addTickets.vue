@@ -212,7 +212,31 @@ export default {
         })
     },
     updateTicket () {
-      console.log('update')
+      if (!this.form.id_specialty) {
+        toastr.error('Виберіть спеціальність')
+        return false
+      }
+
+      this.btnLoader = true
+
+      let params = this.form
+      params.id = this.activeTicket.id
+
+      api.updateTicket(params)
+        .then(res => {
+          if (res.data.success) {
+            let index = this.tickets.findIndex(i => i.id === params.id)
+            this.tickets[index] = res.data.data.ticket
+
+            toastr.success(res.data.message)
+          } else {
+            toastr.error(res.data.message)
+          }
+          this.btnLoader = false
+        })
+        .catch(resErr => {
+          console.log('Помилка в блоці catch')
+        })
     },
     deleteTicket (id) {
       api.deleteTicket(id)
