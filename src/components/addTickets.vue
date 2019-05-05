@@ -215,8 +215,20 @@ export default {
       console.log('update')
     },
     deleteTicket (id) {
-      console.log('delete')
-      console.log(id)
+      api.deleteTicket(id)
+        .then(res => {
+          if (res.data.success) {
+            let index = this.tickets.findIndex(i => i.id === id)
+            this.$delete(this.tickets, index)
+
+            toastr.success(res.data.message)
+          } else {
+            toastr.error(res.data.message)
+          }
+        })
+        .catch(resErr => {
+          console.log('Помилка в блоці catch', resErr)
+        })
     }
   },
   computed: {

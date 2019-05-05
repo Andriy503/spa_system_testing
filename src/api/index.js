@@ -107,5 +107,8 @@ export default {
   },
   addTicket (data) {
     return axios.post('addTicket.json', data)
+  },
+  deleteTicket (id) {
+    return axios.post('deleteTicket.json', {id: id})
   }
 }
