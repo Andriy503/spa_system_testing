@@ -113,5 +113,11 @@ export default {
   },
   updateTicket (data) {
     return axios.post('updateTicket.json', data)
+  },
+  getQuestions (ticketId) {
+    return axios.get('getQuestions.json?ticketId=' + ticketId)
+  },
+  saveQuestion (data) {
+    return axios.post('saveQuestion.json', data)
   }
 }

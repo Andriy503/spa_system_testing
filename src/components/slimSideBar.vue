@@ -9,7 +9,7 @@
         </div>
         <div class="list-group list-group-flush">
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'educations')"><i class="fas fa-university"></i> Навчальні піздрозділи</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'cpecialty')" v-if="authUser.role_id === 1"><i class="fas fa-graduation-cap"></i> Спеціальності</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'cpecialty')"><i class="fas fa-graduation-cap"></i> Спеціальності</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addTickets')"><i class="fas fa-ticket-alt"></i> Білети</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')"><i class="fas fa-plus-square"></i> Екзаменаційні питання</a>
           <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')"><i class="fas fa-plus-circle"></i> Екзаменаційні відповіді</a>
@@ -49,10 +49,10 @@ export default {
   data () {
     return {
       myComponents: {
-        addQuestions: false,
+        addQuestions: true,
         addAnswers: false,
         addAdminUsers: false,
-        addTickets: true,
+        addTickets: false,
         educations: false,
         cpecialty: false
       },
