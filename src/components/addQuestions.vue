@@ -73,7 +73,16 @@
           <tbody>
             <tr v-for="(item, index) in getQuestions" :key="index">
               <td>{{ item.title }}</td>
-              <td>{{ item.pre_img ? '+' : '-' }}</td>
+              <td v-if="item.pre_img">
+                <img class="previewImgQuestion"
+                  height="30"
+                  :src="require('@/assets/uploads/questions-image/' + item.pre_img)"
+                  @click="toggleModal(item.pre_img)"
+                >
+              </td>
+              <td v-else>
+                -
+              </td>
               <td>{{ item.rating }}</td>
               <td>{{ item.points }}</td>
               <td align="right" id="tdTableGetEducations">
@@ -124,7 +133,7 @@
 
               <!-- rating -->
               <label for="basic-url">Рейтинг питання</label>
-              <select v-model="form.rating" class="form-control">
+              <select v-model="form.rating" class="form-control" id="titleArea">
                 <option value=""></option>
                 <option v-for="i in 3" :key="i">
                   {{ i }}
@@ -133,7 +142,7 @@
 
               <!-- type -->
               <label for="basic-url">Тип питання</label>
-              <select class="form-control" v-model="form.id_type">
+              <select class="form-control" v-model="form.id_type" id="titleArea">
                 <option value=""></option>
                 <option v-for="(item, index) in typeQuestions" :key="index" :value="item.id">
                   {{ item.title }}
@@ -162,15 +171,27 @@
         </div>
       </div>
 
+      <!-- !delete -->
+      <!-- modal window -->
+        <div class="modal2">
+            <div class="modal-content2">
+              <img class="previewImgQuestion"
+              v-if="activeImg"
+                  :src="require('@/assets/uploads/questions-image/' + activeImg)"
+                >
+            </div>
+        </div>
+        <!-- end modal -->
+
     </div>
 </template>
 
 <script>
 
 // import store from '@/store'
-// import toastr from 'toastr'
 import isEmpty from 'lodash/isEmpty'
-// import 'toastr/build/toastr.min.css'
+import toastr from 'toastr'
+import 'toastr/build/toastr.min.css'
 import api from '@/api'
 import '@/css/questions.css'
 import {mapState} from 'vuex'
@@ -189,7 +210,7 @@ export default {
       btnLoader: false,
       form: {
         title: '',
-        pre_img: null,
+        preImage: [],
         rating: 0,
         points: 0,
         id_type: 0
@@ -212,7 +233,7 @@ export default {
           title: 'Слово'
         }
       ],
-      selectedFile: []
+      activeImg: ''
     }
   },
   methods: {
@@ -220,13 +241,25 @@ export default {
 
     },
     saveQuestions () {
+      if (!this.validForm()) { return false }
+
+      this.btnLoader = true
       let fd = new FormData()
-      fd.append('image', this.selectedFile, this.selectedFile.name)
-      // fd.append('title', 'Hello world')
+
+      for (let item in this.form) {
+        if (item === 'preImage') {
+          fd.append('image', this.form[item], this.form[item].name)
+
+          continue
+        }
+
+        fd.append(item, this.form[item])
+      }
 
       api.saveQuestion(fd)
         .then(res => {
           console.log(res.data)
+          this.btnLoader = false
         })
         .catch(resErr => {
           console.log('Помилка в блоці catch: ', resErr)
@@ -243,16 +276,37 @@ export default {
         console.log(this.activeQuestion)
       } else {
         this.form.title = ''
-        this.form.pre_img = null
         this.form.rating = 0
         this.form.points = 0
         this.form.id_type = 0
       }
     },
     onLoadFile (event) {
-      this.selectedFile = event.target.files[0]
+      this.form.preImage = event.target.files[0]
+    },
+    validForm () {
+      let field = {
+        title: '`Заголовок`',
+        rating: '`Рейтинг`',
+        points: '`Кількість балів`',
+        id_type: '`Тип питання`'
+      }
 
-      console.log(this.selectedFile)
+      for (let item in this.form) {
+        if (~['title', 'rating', 'points', 'id_type'].indexOf(item)) {
+          if (!this.form[item]) {
+            toastr.error('Поле ' + field[item] + ' не може бути пустим!')
+            return false
+          }
+        }
+      }
+
+      return true
+    },
+    toggleModal (imgPath = '') {
+      this.activeImg = imgPath
+      var modal = document.querySelector('.modal2')
+      modal.classList.toggle('show-modal2')
     }
   },
   computed: {
@@ -310,6 +364,17 @@ export default {
   created () {
     // !delete
     this.activeIdTicket = 1
+
+    // modal window (window)
+    function windowOnClick (event) {
+      var modal = document.querySelector('.modal2')
+
+      if (event.target === modal) {
+        modal.classList.toggle('show-modal2')
+      }
+    }
+    window.addEventListener('click', windowOnClick)
+    // close modal window
   }
 }
 </script>
