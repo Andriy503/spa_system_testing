@@ -76,7 +76,7 @@
               <td v-if="item.pre_img">
                 <img class="previewImgQuestion"
                   height="30"
-                  :src="require('@/assets/uploads/questions-image/' + item.pre_img)"
+                  :src="getServerName + item.pre_img"
                   @click="toggleModal(item.pre_img)"
                 >
               </td>
@@ -171,30 +171,29 @@
         </div>
       </div>
 
-      <!-- !delete -->
-      <!-- modal window -->
-        <div class="modal2">
-            <div class="modal-content2">
-              <img class="previewImgQuestion"
+      <!-- modal full view photo -->
+      <div class="photo-view-modal">
+        <div class="modal-view-content">
+          <img class="pre-img"
               v-if="activeImg"
-                  :src="require('@/assets/uploads/questions-image/' + activeImg)"
-                >
-            </div>
+              :src="activeImg"
+            >
         </div>
-        <!-- end modal -->
+      </div>
+      <!-- end modal -->
 
     </div>
 </template>
 
 <script>
 
-// import store from '@/store'
 import isEmpty from 'lodash/isEmpty'
 import toastr from 'toastr'
 import 'toastr/build/toastr.min.css'
 import api from '@/api'
 import '@/css/questions.css'
 import {mapState} from 'vuex'
+import config from '@/default_config'
 
 export default {
   name: 'addQuestions',
@@ -241,7 +240,9 @@ export default {
 
     },
     saveQuestions () {
-      if (!this.validForm()) { return false }
+      if (!this.validForm()) {
+        return false
+      }
 
       this.btnLoader = true
       let fd = new FormData()
@@ -303,11 +304,24 @@ export default {
 
       return true
     },
+    // photo view modal functions
     toggleModal (imgPath = '') {
-      this.activeImg = imgPath
-      var modal = document.querySelector('.modal2')
-      modal.classList.toggle('show-modal2')
+      this.activeImg = this.getServerName + imgPath
+      let modal = this.photoViewModal()
+
+      modal.classList.toggle('photo-view-modal-show-or-hide')
+    },
+    bindWindowClick (event) {
+      let modal = this.photoViewModal()
+
+      if (event.target === modal) {
+        modal.classList.toggle('photo-view-modal-show-or-hide')
+      }
+    },
+    photoViewModal () {
+      return document.querySelector('.photo-view-modal')
     }
+    // end view modal functions
   },
   computed: {
     ...mapState('general', [
@@ -326,6 +340,9 @@ export default {
     },
     getQuestions () {
       return this.questions
+    },
+    getServerName () {
+      return config.serverNameDomain
     }
   },
   watch: {
@@ -365,16 +382,7 @@ export default {
     // !delete
     this.activeIdTicket = 1
 
-    // modal window (window)
-    function windowOnClick (event) {
-      var modal = document.querySelector('.modal2')
-
-      if (event.target === modal) {
-        modal.classList.toggle('show-modal2')
-      }
-    }
-    window.addEventListener('click', windowOnClick)
-    // close modal window
+    window.addEventListener('click', this.bindWindowClick)
   }
 }
 </script>
