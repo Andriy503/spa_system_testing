@@ -372,6 +372,8 @@ export default {
         fd.append(item, this.form[item])
       }
 
+      fd.append('id_ticket', this.activeIdTicket)
+
       return fd
     }
   },
@@ -432,7 +434,7 @@ export default {
   },
   created () {
     // !delete
-    this.activeIdTicket = 1
+    // this.activeIdTicket = 1
 
     window.addEventListener('click', this.bindWindowClick)
   }
