@@ -119,5 +119,11 @@ export default {
   },
   saveQuestion (data) {
     return axios.post('saveQuestion.json', data)
+  },
+  deleteQuestion (id) {
+    return axios.post('deleteQuestion.json', {id: id})
+  },
+  editQuestion (data) {
+    return axios.post('editQuestion.json', data)
   }
 }

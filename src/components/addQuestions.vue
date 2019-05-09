@@ -151,11 +151,11 @@
 
               <!-- count scores -->
               <label for="basic-url">Кількість балів</label>
-              <input type="number" class="form-control" placeholder="наприклад 5" v-model="form.points">
+              <input type="number" class="form-control" v-model="form.points">
 
               <!-- load img -->
               <label for="basic-url">Загрузка зображення</label>
-              <input type="file" @change="onLoadFile">
+              <input type="file" @change="onLoadFile" id="inp-file">
 
             </div>
             <div class="modal-footer">
@@ -209,9 +209,9 @@ export default {
       btnLoader: false,
       form: {
         title: '',
-        preImage: [],
+        pre_img: [],
         rating: 0,
-        points: 0,
+        points: '',
         id_type: 0
       },
       typeQuestions: [
@@ -232,12 +232,35 @@ export default {
           title: 'Слово'
         }
       ],
-      activeImg: ''
+      activeImg: '',
+      valueInputFile: ''
     }
   },
   methods: {
     updateQuestion () {
+      if (!this.validForm()) {
+        return false
+      }
 
+      this.btnLoader = true
+      let data = this.appendDateForm()
+
+      api.editQuestion(data)
+        .then(res => {
+          if (res.data.success) {
+            let index = this.questions.findIndex(i => i.id === this.activeQuestion.id)
+            this.questions[index] = res.data.data.question
+
+            toastr.success(res.data.message)
+          } else {
+            toastr.error(res.data.message)
+          }
+
+          this.btnLoader = false
+        })
+        .catch(resErr => {
+          console.log('Помилка в блоці catch: ', resErr)
+        })
     },
     saveQuestions () {
       if (!this.validForm()) {
@@ -245,21 +268,18 @@ export default {
       }
 
       this.btnLoader = true
-      let fd = new FormData()
+      let data = this.appendDateForm()
 
-      for (let item in this.form) {
-        if (item === 'preImage') {
-          fd.append('image', this.form[item], this.form[item].name)
-
-          continue
-        }
-
-        fd.append(item, this.form[item])
-      }
-
-      api.saveQuestion(fd)
+      api.saveQuestion(data)
         .then(res => {
-          console.log(res.data)
+          if (res.data.success) {
+            this.questions.push(res.data.data.question)
+
+            toastr.success(res.data.message)
+          } else {
+            toastr.error(res.data.message)
+          }
+
           this.btnLoader = false
         })
         .catch(resErr => {
@@ -267,23 +287,41 @@ export default {
         })
     },
     deleteQuestion (id) {
-      console.log('delete, id: ' + id)
+      api.deleteQuestion(id)
+        .then(res => {
+          if (res.data.success) {
+            let index = this.questions.findIndex(i => i.id === id)
+            this.$delete(this.questions, index)
+
+            toastr.success(res.data.message)
+          } else {
+            toastr.error(res.data.message)
+          }
+        })
+        .catch(resErr => {
+          console.log('Помилка в блоці catch: ', resErr)
+        })
     },
     selectQuestion (question = {}) {
       this.activeQuestion = question
 
       if (!isEmpty(this.activeQuestion)) {
-        this.form = this.activeQuestion
-        console.log(this.activeQuestion)
+        this.form = {...this.activeQuestion}
       } else {
-        this.form.title = ''
-        this.form.rating = 0
-        this.form.points = 0
-        this.form.id_type = 0
+        this.form = {
+          title: '',
+          pre_img: [],
+          rating: 0,
+          points: '',
+          id_type: 0
+        }
       }
+
+      let file = document.getElementById('inp-file')
+      file.value = ''
     },
     onLoadFile (event) {
-      this.form.preImage = event.target.files[0]
+      this.form.pre_img = event.target.files[0]
     },
     validForm () {
       let field = {
@@ -320,8 +358,22 @@ export default {
     },
     photoViewModal () {
       return document.querySelector('.photo-view-modal')
+    }, // end view modal functions
+    appendDateForm () {
+      let fd = new FormData()
+
+      for (let item in this.form) {
+        if (item === 'pre_img' && this.form[item]) {
+          fd.append('image', this.form[item], this.form[item].name)
+
+          continue
+        }
+
+        fd.append(item, this.form[item])
+      }
+
+      return fd
     }
-    // end view modal functions
   },
   computed: {
     ...mapState('general', [
