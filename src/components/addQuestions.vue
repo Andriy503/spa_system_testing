@@ -67,6 +67,7 @@
               <th scope="col">Фото</th>
               <th scope="col">Рейтинг</th>
               <th scope="col">Кількість балів</th>
+              <th scope="col">Hash</th>
               <th></th>
             </tr>
           </thead>
@@ -85,6 +86,7 @@
               </td>
               <td>{{ item.rating }}</td>
               <td>{{ item.points }}</td>
+              <td>{{ item.search_hash }}</td>
               <td align="right" id="tdTableGetEducations">
                 <i
                   class="far fa-edit"

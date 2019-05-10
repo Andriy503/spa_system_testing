@@ -49,8 +49,8 @@ export default {
   data () {
     return {
       myComponents: {
-        addQuestions: true,
-        addAnswers: false,
+        addQuestions: false,
+        addAnswers: true,
         addAdminUsers: false,
         addTickets: false,
         educations: false,

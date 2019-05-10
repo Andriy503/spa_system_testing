@@ -125,5 +125,17 @@ export default {
   },
   editQuestion (data) {
     return axios.post('editQuestion.json', data)
+  },
+  searchHash (hash) {
+    return axios.get('searchHash.json?hash=' + hash)
+  },
+  addAnswer (data) {
+    return axios.post('addAnswer.json', data)
+  },
+  deleteAnswer (id) {
+    return axios.post('deleteAnswer.json', {id: id})
+  },
+  updateAnswer (data) {
+    return axios.post('updateAnswer.json', data)
   }
 }
