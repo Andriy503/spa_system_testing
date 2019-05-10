@@ -15,6 +15,10 @@
   max-height: 250px;
 }
 
+#preImgQuestionBlockAnswer:hover {
+  cursor: pointer;
+}
+
 .answer-block {
   margin: 20px;
   display: flex;
@@ -47,6 +51,7 @@
 #li-answers-group {
   display: flex;
   text-align: justify;
+  margin-top: 5px;
 }
 
 .action-answer-in-div {
@@ -76,4 +81,14 @@
 
 #inp-add-answer {
   width: 100%;
+}
+
+.active-li-answer-false {
+  border-left-width: 3px !important;
+  border-left-color: #ce3950 !important;
+}
+
+.active-li-answer-true {
+  border-left-width: 3px !important;
+  border-left-color: green !important;
 }

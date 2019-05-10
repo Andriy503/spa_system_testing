@@ -34,6 +34,7 @@
                 : require('@/assets/placholder-no-question-image.jpg')"
               alt="Question image"
               id="preImgQuestionBlockAnswer"
+              @click="toggleModal(question.pre_img)"
             >
             <div class="card-body">
               <h5 class="card-title" id="card-question-block-answer-title">
@@ -78,7 +79,11 @@
             <!-- list answers -->
             <div class="list-answers">
               <ul class="list-group" v-for="(answer, index) in answers" :key="index">
-                <li class="list-group-item list-group-item-action" id="li-answers-group">
+                <li
+                  class="list-group-item list-group-item-action active-li-answer-false"
+                  id="li-answers-group"
+                  :class="{'active-li-answer-true' : answer.current_answer}"
+                >
                   {{ answer.title }}
                   <div class="action-answer-in-div">
                     <i
@@ -132,6 +137,17 @@
           </div>
           <!-- end modal -->
 
+          <!-- modal full view photo -->
+          <div class="photo-view-modal">
+            <div class="modal-view-content">
+              <img class="pre-img"
+                  v-if="activeImg"
+                  :src="activeImg"
+                >
+            </div>
+          </div>
+          <!-- end modal -->
+
         </div>
       </div>
 
@@ -162,7 +178,8 @@ export default {
       },
       btnLoader: false,
       btnLoaderUpdate: false,
-      activeAnswer: {}
+      activeAnswer: {},
+      activeImg: ''
     }
   },
   methods: {
@@ -257,7 +274,26 @@ export default {
         .catch(resErr => {
           console.log('Помилка в блоці catch: ', resErr)
         })
-    }
+    },
+    // photo view modal functions
+    toggleModal (imgPath = '') {
+      if (!isEmpty(imgPath)) {
+        this.activeImg = this.getServerName + imgPath
+        let modal = this.photoViewModal()
+
+        modal.classList.toggle('photo-view-modal-show-or-hide')
+      }
+    },
+    bindWindowClick (event) {
+      let modal = this.photoViewModal()
+
+      if (event.target === modal) {
+        modal.classList.toggle('photo-view-modal-show-or-hide')
+      }
+    },
+    photoViewModal () {
+      return document.querySelector('.photo-view-modal')
+    } // end view modal functions
   },
   computed: {
     isIssetQuestion () {
@@ -270,6 +306,9 @@ export default {
     getServerName () {
       return config.serverNameDomain
     }
+  },
+  created () {
+    window.addEventListener('click', this.bindWindowClick)
   },
   components: {
     preLoader
