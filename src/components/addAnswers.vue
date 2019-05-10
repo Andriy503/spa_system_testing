@@ -51,7 +51,7 @@
           </div>
 
           <!-- one answer -->
-          <div v-if="question.id_type === 1" class="test1">
+          <div v-if="~[1,2,4].indexOf(question.id_type)" class="main-wrapper-asnwers">
 
             <!--input add answer -->
             <form class="form-inline my-2 my-lg-0" id="form-add-answer">
@@ -65,10 +65,10 @@
             </form>
 
             <!-- checkbox -->
-            <input type="checkbox" id="checkbox-is-true-answer" v-model="form.current_answer">
-            <label for="checkbox-is-true-answer" id="label-is-true-answer">Це правильна відповідь</label>
+            <input type="checkbox" id="checkbox-is-true-answer" v-model="form.current_answer" v-if="question.id_type === 1 || question.id_type === 2">
+            <label for="checkbox-is-true-answer" id="label-is-true-answer" v-if="question.id_type === 1 || question.id_type === 2">Це правильна відповідь</label>
 
-            <!--  -->
+            <!-- btn -->
             <button class="btn btn-primary"
               id="add-answer-one"
               @click="addAnswer"
@@ -82,7 +82,7 @@
                 <li
                   class="list-group-item list-group-item-action active-li-answer-false"
                   id="li-answers-group"
-                  :class="{'active-li-answer-true' : answer.current_answer}"
+                  :class="{'active-li-answer-true' : answer.current_answer || question.id_type === 4}"
                 >
                   {{ answer.title }}
                   <div class="action-answer-in-div">
@@ -105,6 +105,9 @@
               </ul>
             </div>
 
+          </div>
+          <div v-else-if="question.id_type === 3" class="main-wrapper-asnwers">
+            <h3>Hello world</h3>
           </div>
 
           <!-- modal window -->
@@ -220,8 +223,14 @@ export default {
 
       api.addAnswer({...this.form, id_question: this.question.id})
         .then(res => {
-          this.answers.push(res.data.data.answer)
-          this.form.title = ''
+          if (res.data.success) {
+            this.answers.push(res.data.data.answer)
+            this.form.title = ''
+
+            toastr.success(res.data.message)
+          } else {
+            toastr.error(res.data.message)
+          }
 
           this.btnLoader = false
         })
