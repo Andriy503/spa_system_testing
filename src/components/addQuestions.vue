@@ -65,7 +65,7 @@
             <tr>
               <th scope="col">Питання</th>
               <th scope="col">Фото</th>
-              <th scope="col">Рейтинг</th>
+              <th scope="col">Тип питання</th>
               <th scope="col">Кількість балів</th>
               <th scope="col">Hash</th>
               <th></th>
@@ -84,7 +84,7 @@
               <td v-else>
                 -
               </td>
-              <td>{{ item.rating }}</td>
+              <td>{{item.types_question.title}}</td>
               <td>{{ item.points }}</td>
               <td>{{ item.search_hash }}</td>
               <td align="right" id="tdTableGetEducations">

@@ -107,7 +107,28 @@
 
           </div>
           <div v-else-if="question.id_type === 3" class="main-wrapper-asnwers">
-            <h3>Hello world</h3>
+            <div class="form-comp-assoc">
+              <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[0].a_question">
+              <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[0].a_answer">
+
+              <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[1].a_question">
+              <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[1].a_answer">
+
+              <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[2].a_question">
+              <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[2].a_answer">
+
+              <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[3].a_question">
+              <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[3].a_answer">
+
+              <button class="btn btn-success" id="save-assoc-btn" @click="saveBundles" v-if="!isExistBundle">
+                Зберегти
+                <i class='fa fa-spinner fa-spin fa-fw' v-if="btnLoaderUpdate"></i>
+              </button>
+              <button class="btn btn-primary" id="save-assoc-btn" @click="updateBundles" v-else>
+                Оновити
+                <i class='fa fa-spinner fa-spin fa-fw' v-if="btnLoaderUpdate"></i>
+              </button>
+            </div>
           </div>
 
           <!-- modal window -->
@@ -171,7 +192,7 @@ export default {
   name: 'addAnswers',
   data () {
     return {
-      hash: 'q5cd5422dcee5e4.62598155',
+      hash: 'q5ce2f2edce98f6.25638258',
       preLoader: false,
       question: {},
       answers: [],
@@ -182,7 +203,26 @@ export default {
       btnLoader: false,
       btnLoaderUpdate: false,
       activeAnswer: {},
-      activeImg: ''
+      activeImg: '',
+      bundlesForm: [
+        {
+          a_question: '',
+          a_answer: ''
+        },
+        {
+          a_question: '',
+          a_answer: ''
+        },
+        {
+          a_question: '',
+          a_answer: ''
+        },
+        {
+          a_question: '',
+          a_answer: ''
+        }
+      ],
+      isExistBundle: false
     }
   },
   methods: {
@@ -199,10 +239,37 @@ export default {
         .then(res => {
           if (res.data.success) {
             let data = res.data.data
+            this.isExistBundle = false
+            // reset
+            this.bundlesForm = [
+              {
+                a_question: '',
+                a_answer: ''
+              },
+              {
+                a_question: '',
+                a_answer: ''
+              },
+              {
+                a_question: '',
+                a_answer: ''
+              },
+              {
+                a_question: '',
+                a_answer: ''
+              }
+            ]
 
             if (data.question) {
               this.answers = data.answers
               this.question = data.question
+
+              if (!isEmpty(this.answers) && this.answers.length === 1) {
+                if (!isEmpty(this.answers[0].bundles)) {
+                  this.bundlesForm = this.answers[0].bundles
+                  this.isExistBundle = true
+                }
+              }
             }
           }
 
@@ -302,7 +369,55 @@ export default {
     },
     photoViewModal () {
       return document.querySelector('.photo-view-modal')
-    } // end view modal functions
+    }, // end view modal functions
+    saveBundles () {
+      for (let i = 0; i < this.bundlesForm.length; i++) {
+        if (isEmpty(this.bundlesForm[i].a_question) || isEmpty(this.bundlesForm[i].a_answer)) {
+          toastr.error('Заповніть коректно форму!')
+          return false
+        }
+      }
+
+      this.btnLoaderUpdate = true
+
+      api.addBundles({data: {...this.bundlesForm}, id_question: this.question.id})
+        .then(res => {
+          if (res.data.success) {
+            toastr.success(res.data.message)
+          } else {
+            toastr.error(res.data.message)
+          }
+
+          this.btnLoaderUpdate = false
+        })
+        .catch(resErr => {
+          console.log('Помилка в блоці catch: ', resErr)
+        })
+    },
+    updateBundles () {
+      for (let i = 0; i < this.bundlesForm.length; i++) {
+        if (isEmpty(this.bundlesForm[i].a_question) || isEmpty(this.bundlesForm[i].a_answer)) {
+          toastr.error('Заповніть коректно форму!')
+          return false
+        }
+      }
+
+      this.btnLoaderUpdate = true
+
+      api.updateBundle({data: this.bundlesForm})
+        .then(res => {
+          if (res.data.success) {
+            toastr.success(res.data.message)
+          } else {
+            toastr.error(res.data.message)
+          }
+
+          this.btnLoaderUpdate = false
+        })
+        .catch(resErr => {
+          console.log('Помилка в блоці catch: ', resErr)
+        })
+    }
   },
   computed: {
     isIssetQuestion () {

@@ -137,5 +137,11 @@ export default {
   },
   updateAnswer (data) {
     return axios.post('updateAnswer.json', data)
+  },
+  addBundles (data) {
+    return axios.post('addBundles.json', data)
+  },
+  updateBundle (data) {
+    return axios.post('updateBundle.json', data)
   }
 }

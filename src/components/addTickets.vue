@@ -60,8 +60,8 @@
             </div>
             <ul class="list-group list-group-flush" id="ticket-list">
               <li class="list-group-item">Час проходження білета: {{ ticket.time_of_passing }}хв</li>
-              <li class="list-group-item">Загальна кількість завдань: {{ ticket.count_question }}</li>
-              <li class="list-group-item">Поточна кількість завдань: {{ ticket.count_questions_marge }}</li>
+              <li class="list-group-item">Загальна кількість питань: {{ ticket.count_question }}</li>
+              <li class="list-group-item">Поточна кількість питань: {{ ticket.count_questions_marge }}</li>
               <li class="list-group-item">Спеціальність: {{ ticket.specialty.title }}</li>
             </ul>
           </div>

@@ -92,3 +92,18 @@
   border-left-width: 3px !important;
   border-left-color: green !important;
 }
+#formAddAssoc > input {
+  margin-right: 10px;
+  /* width: 70px; */
+}
+
+.form-comp-assoc > input {
+  width: 49%;
+  float: left;
+  margin: 0.5%;
+}
+
+#save-assoc-btn {
+  float: right;
+  margin-top: 10px;
+}
