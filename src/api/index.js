@@ -143,5 +143,17 @@ export default {
   },
   updateBundle (data) {
     return axios.post('updateBundle.json', data)
+  },
+  getEntrants () {
+    return axios.get('getEntrants.json')
+  },
+  addEntrant (data) {
+    return axios.post('addEntrant.json', data)
+  },
+  updateEntrant (data) {
+    return axios.post('updateEntrant.json', data)
+  },
+  deleteEntrant (id) {
+    return axios.post('deleteEntrant.json', {id: id})
   }
 }

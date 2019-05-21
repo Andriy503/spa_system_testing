@@ -20,7 +20,7 @@
       </div>
 
       <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo03">
-        <ul class="navbar-nav" v-if="checkAuth">
+        <ul class="navbar-nav" v-if="!checkAuth">
           <li class="nav-item">
             <router-link class="nav-link" to="/login">Увійти</router-link>
           </li>
@@ -29,6 +29,9 @@
           </li>
         </ul>
         <ul class="navbar-nav" v-else>
+          <li class="nav-item">
+            <router-link class="nav-link" to="/cabinet">Адмін панель</router-link>
+          </li>
           <li class="nav-item">
             <span class="nav-link" @click="logout" id="logout">Вийти</span>
           </li>
@@ -110,7 +113,7 @@ export default {
   },
   computed: {
     checkAuth () {
-      return isEmpty(this.authUser)
+      return !isEmpty(this.authUser)
     }
   },
   created () {

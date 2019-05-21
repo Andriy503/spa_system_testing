@@ -192,7 +192,7 @@ export default {
   name: 'addAnswers',
   data () {
     return {
-      hash: 'q5ce2f2edce98f6.25638258',
+      hash: '',
       preLoader: false,
       question: {},
       answers: [],

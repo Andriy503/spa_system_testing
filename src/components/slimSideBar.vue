@@ -8,12 +8,13 @@
           <span>Адмін панель</span>
         </div>
         <div class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'educations')"><i class="fas fa-university"></i> Навчальні піздрозділи</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'cpecialty')"><i class="fas fa-graduation-cap"></i> Спеціальності</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addTickets')"><i class="fas fa-ticket-alt"></i> Білети</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')"><i class="fas fa-plus-square"></i> Екзаменаційні питання</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')"><i class="fas fa-plus-circle"></i> Екзаменаційні відповіді</a>
-          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAdminUsers')" v-if="authUser.role_id === 1"><i class="fas fa-users"></i> Користувачі</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'educations')"><i class="fas fa-university icon-slim-bars"></i> Навчальні піздрозділи</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'cpecialty')"><i class="fas fa-graduation-cap icon-slim-bars"></i> Спеціальності</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addTickets')"><i class="fas fa-ticket-alt icon-slim-bars"></i> Білети</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addQuestions')"><i class="fas fa-plus-square icon-slim-bars"></i> Екзаменаційні питання</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAnswers')"><i class="fas fa-plus-circle icon-slim-bars"></i> Екзаменаційні відповіді</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'addAdminUsers')" v-if="authUser.role_id === 1"><i class="fas fa-users icon-slim-bars"></i> Користувачі</a>
+          <a href="#" class="list-group-item list-group-item-action bg-light" @click="toggleComponent($event, 'entrants')"><i class="fas fa-user-friends icon-slim-bars"></i> Абітурієнти</a>
         </div>
       </div>
       <!-- /#sidebar-wrapper -->
@@ -24,6 +25,7 @@
       <addTickets v-if="myComponents.addTickets"></addTickets>
       <educations v-if="myComponents.educations"></educations>
       <cpecialty v-if="myComponents.cpecialty"></cpecialty>
+      <entrants v-if="myComponents.entrants"></entrants>
 
     </div>
 </template>
@@ -43,6 +45,7 @@ import adminUsers from '@/components/adminUsers'
 import addTickets from '@/components/addTickets'
 import educations from '@/components/educations'
 import cpecialty from '@/components/cpecialty'
+import entrants from '@/components/entrants'
 
 export default {
   name: 'slimSideBar',
@@ -50,11 +53,12 @@ export default {
     return {
       myComponents: {
         addQuestions: false,
-        addAnswers: true,
+        addAnswers: false,
         addAdminUsers: false,
         addTickets: false,
         educations: false,
-        cpecialty: false
+        cpecialty: false,
+        entrants: true
       },
       authUser: {}
     }
@@ -86,7 +90,8 @@ export default {
     adminUsers,
     addTickets,
     educations,
-    cpecialty
+    cpecialty,
+    entrants
   }
 }
 </script>
