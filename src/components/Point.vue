@@ -76,9 +76,7 @@
 <script>
 
 import store from '@/store'
-// import toastr from 'toastr'
 import isEmpty from 'lodash/isEmpty'
-// import 'toastr/build/toastr.min.css'
 import api from '@/api'
 import '@/css/point.css'
 
@@ -93,7 +91,7 @@ export default {
   },
   methods: {
     beginTest () {
-      this.$router.push('cabinet')
+      this.$router.push('access-entrants')
     },
     logout () {
       api.logout()

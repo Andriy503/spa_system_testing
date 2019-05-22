@@ -155,5 +155,8 @@ export default {
   },
   deleteEntrant (id) {
     return axios.post('deleteEntrant.json', {id: id})
+  },
+  verificationEntrant (data) {
+    return axios.post('verificationEntrant.json', data)
   }
 }
