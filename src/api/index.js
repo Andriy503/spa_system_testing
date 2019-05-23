@@ -158,5 +158,8 @@ export default {
   },
   verificationEntrant (data) {
     return axios.post('verificationEntrant.json', data)
+  },
+  getDataAndCheckRootUser (data) {
+    return axios.post('getDataAndCheckRootUser.json', data)
   }
 }

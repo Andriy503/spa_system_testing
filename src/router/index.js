@@ -5,6 +5,7 @@ import auth from '@/components/auth'
 import cabinet from '@/components/cabinet'
 import departaments from '@/components/departaments'
 import accessEntrants from '@/components/accessEntrants'
+import testing from '@/components/testing'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/access-entrants',
       name: 'accessEntrants',
       component: accessEntrants
+    },
+    {
+      path: '/testing',
+      name: 'testing',
+      component: testing
     }
   ]
 })

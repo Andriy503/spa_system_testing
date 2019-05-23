@@ -124,7 +124,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Не погоджуюсь</button>
-            <button type="button" class="btn btn-primary">Погоджуюсь</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="agree">Погоджуюсь</button>
           </div>
         </div>
       </div>
@@ -308,11 +308,11 @@ export default {
 
       this.btnLoader = true
       this.entrant = {}
+      localStorage.removeItem('entrant')
 
       api.verificationEntrant(this.form)
         .then(res => {
           if (res.data.success) {
-            // localStorage.setItem('entrant', JSON.stringify(res.data.data.entrant))
             this.entrant = res.data.data.entrant
 
             toastr.success(res.data.message)
@@ -327,6 +327,11 @@ export default {
         .catch(resErr => {
           console.log('Помилка в блоці catch: ', resErr)
         })
+    },
+    agree () {
+      localStorage.setItem('entrant', JSON.stringify(this.entrant))
+
+      this.$router.push('testing')
     }
   }
 }
