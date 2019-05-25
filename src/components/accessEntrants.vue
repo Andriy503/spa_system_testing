@@ -54,13 +54,13 @@
           <div class="modal-body">
             <b>
               <center>
-              &emsp; ПОЯСНЮВАЛЬНА ЗАПИСКА ДО ТЕСТУ З ФАХОВИХ ДИСЦИПЛІН <br> СПЕЦІАЛЬНОСТІ {{ this.entrant.specialty.full_name.toUpperCase() }}
+              &emsp; ПОЯСНЮВАЛЬНА ЗАПИСКА ДО ТЕСТУ З ФАХОВИХ ДИСЦИПЛІН <br> СПЕЦІАЛЬНОСТІ {{ this.entrant.specialty.title.toUpperCase() }}
               <br>
-              ВАРІАНТ 1
+              {{ this.ticket.title.toUpperCase() }}
               </center>
             </b>
             &emsp; Зміст тесту визначається на основі Програми фахового випробування для вступників, які вступають на навчання за спеціальністю {{ this.entrant.specialty.full_name }} для здобуття освітнього ступеня бакалавра або магістра. <br>
-            &emsp; Фахове випробування проводиться у формі тестування. Загальна кількість завдань тесту – 28. Тривалість фахового випробування – 120 хвилин. <br>
+            &emsp; Фахове випробування проводиться у формі тестування. Загальна кількість завдань тесту – {{ this.ticket.count_question }}. Тривалість фахового випробування – {{ this.ticket.time_of_passing }} хвилин. <br>
             &emsp; Тест складається із завдань трьох форм: <br>
             <b>
               &emsp;1.&nbsp;Завдання з вибором однієї правильної відповіді.
@@ -153,6 +153,7 @@ export default {
       },
       btnLoader: false,
       entrant: {},
+      ticket: {},
       fixtureForTable: [
         {
           c1: 0,
@@ -314,10 +315,10 @@ export default {
         .then(res => {
           if (res.data.success) {
             this.entrant = res.data.data.entrant
+            this.ticket = res.data.data.ticket
 
+            console.log(this.ticket)
             toastr.success(res.data.message)
-
-            console.log(this.entrant)
           } else {
             toastr.error(res.data.message)
           }
