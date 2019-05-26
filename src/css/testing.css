@@ -30,12 +30,13 @@
   height: 40px;
   border-radius: 20rem;
   margin: 0 0.2rem;
-  border-color: #ffe1fb;
-  background: white;
-	margin-bottom: 1rem;
+  border-color: #f8ab47;
+  margin-bottom: 1rem;
+  color: #5b5b5b;
 }
-.navi-btn.active{
-	background-color: #00d4ff;
+.navi-btn.active {
+  background-color: #f8ab47;
+  color: white !important;
 }
 .test-content{
 	padding: 1rem 0;
@@ -61,6 +62,10 @@
 	height: 25px;
 }
 
+.answer-element > div > label:hover {
+	cursor: pointer;
+}
+
 .answer-element > div > input[type='radio']:after {
   width: 25px;
   height: 25px;
@@ -72,7 +77,7 @@
   content: '';
   display: inline-block;
   visibility: visible;
-  border: 2px solid #ffe1fb;
+  border: 2px solid #32D4FF;
 }
 
 .answer-element > div > input:hover {
@@ -112,7 +117,7 @@
   font-size: 1.5rem;
   font-weight: 500;
   border-radius: 0.45rem;
-  background-color: #00d4ff;
+  background-color: #f8ab47;
   color: white;
 }
 
@@ -122,6 +127,10 @@
 
 .test-control-btn:hover {
   cursor: pointer;
+  background-color: #ffc832;
+  border: 2px solid black;
+  border-color: #32d4ff;
+  box-shadow: 0px 0px 24px 0px rgba(4,180,224,1);
 }
 
 /* chekcbox */
@@ -136,7 +145,7 @@
   content: '';
   display: inline-block;
   visibility: visible;
-  border: 2px solid #ffe1fb;
+  border: 2px solid #32D4FF;
 }
 
 .answer-element > div > input[type='checkbox']:checked:after {
@@ -184,3 +193,7 @@
   border-radius: 20px;
 }
 /* END type 3 ANSWERS */
+
+.q-img-testing {
+  max-width: 80%;
+}

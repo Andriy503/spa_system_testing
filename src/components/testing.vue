@@ -27,6 +27,9 @@
             <!-- question -->
             <div class="test-question">
               {{ currentQuestion.title }}
+              <div v-if="currentQuestion.pre_img">
+                <img :src="getServerName + currentQuestion.pre_img" class="q-img-testing">
+              </div>
             </div>
 
             <!-- block answers -->
@@ -36,7 +39,7 @@
 
                 <!-- One Assoc -->
                 <div v-if="currentQuestion.id_type === 1">
-                  <input type="radio" id="answer1" value="1" name="answerOneAssoc">
+                  <input type="radio" :value="answer.id" :name="'oneAssoc_' + currentQuestion.id" v-model="selectAnswer.oneAssoc">
                   <label>
                     {{ answer.title }}
                   </label>
@@ -44,8 +47,8 @@
 
                 <!-- Many Assoc -->
                 <div v-if="currentQuestion.id_type === 2">
-                  <input type="checkbox" id="answer1" value="1" name="answerManyAssoc">
-                  <label>
+                  <input type="checkbox" :value="answer.id" :id="'manyAssoc_' + answer.id" :name="currentQuestion.id" v-model="selectAnswer.manyAssoc">
+                  <label :for="'manyAssoc_' + answer.id">
                     {{ answer.title }}
                   </label>
                 </div>
@@ -98,7 +101,7 @@
 
           <!-- btn next and back -->
           <div class="test-control">
-            <button class="test-control-btn">
+            <button class="test-control-btn" @click="nextPagination">
               Далі
             </button>
           </div>
@@ -118,6 +121,7 @@ import api from '@/api'
 import '@/css/testing.css'
 import preLoader from '@/components/preLoader'
 import isEmpty from 'lodash/isEmpty'
+import config from '@/default_config'
 
 export default {
   name: 'testing',
@@ -150,7 +154,12 @@ export default {
       isOneTableToClick: false,
       isTwoTableToClick: false,
       activeOneLi: {},
-      associations: []
+      associations: [],
+      // logic
+      selectAnswer: {
+        oneAssoc: false,
+        manyAssoc: []
+      }
     }
   },
   methods: {
@@ -183,6 +192,10 @@ export default {
 
       let index = number - 1
       this.currentQuestion = this.questions[index]
+
+      // clear answers user
+      this.selectAnswer.oneAssoc = false
+      this.selectAnswer.manyAssoc = []
     },
     selectBubleQuestion (e) {
       let li = e.target
@@ -229,6 +242,33 @@ export default {
           idTableTwo: li.value
         }
       )
+    },
+    nextPagination () {
+      if (this.questions.length <= this.paginationNumber) {
+        return false
+      }
+
+      this.paginationNumber++
+
+      let index = this.paginationNumber - 1
+      this.currentQuestion = this.questions[index]
+
+      // clear answers user
+      this.selectAnswer.oneAssoc = false
+      this.selectAnswer.manyAssoc = []
+    }
+  },
+  computed: {
+    getServerName () {
+      return config.serverNameDomain
+    }
+  },
+  watch: {
+    selectAnswer: {
+      handler () {
+        console.log(this.selectAnswer)
+      },
+      deep: true
     }
   },
   created () {
