@@ -161,5 +161,8 @@ export default {
   },
   getDataAndCheckRootUser (data) {
     return axios.post('getDataAndCheckRootUser.json', data)
+  },
+  addAnswerEntant (data) {
+    return axios.post('addAnswerEntant.json', data)
   }
 }

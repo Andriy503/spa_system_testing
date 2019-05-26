@@ -172,8 +172,19 @@ export default {
       api.getDataAndCheckRootUser({id: this.entrant.id})
         .then(res => {
           if (res.data.success) {
-            this.questions = res.data.data.questions
-            this.ticket = res.data.data.ticket
+            let data = res.data.data
+            this.questions = data.questions
+            this.ticket = data.ticket
+
+            if (!isEmpty(data.entrant_answers)) {
+              // this.resultData.push({
+              //   question_id: this.currentQuestion.id,
+              //   answer_id: this.selectAnswer.oneAssoc
+              // })
+              data.entrant_answers.forEach(item => {
+                console.log(item)
+              })
+            }
 
             this.currentQuestion = this.questions[0]
           } else {
@@ -189,21 +200,23 @@ export default {
         })
     },
     changeNumberPagination (number) {
-      console.log(this.resultData)
+      let nextQuestion = this.questions[number - 1]
 
-      console.log(this.currentQuestion)
+      // find select answer
+      let isIssetUserAnswer = this.resultData.find(i => i.question_id === nextQuestion.id)
 
+      if (isIssetUserAnswer) {
+        return false
+      }
+
+      // change answer
+      this.currentQuestion = nextQuestion
+
+      // change navigator number
       this.paginationNumber = number
 
-      let index = number - 1
-      this.currentQuestion = this.questions[index]
-
-      // clear answers user
-      this.selectAnswer.oneAssoc = false
-      this.selectAnswer.manyAssoc = []
-      this.selectAnswer.word = ''
-
-      this.clearAssoc()
+      // clear
+      this.clearAnswersUser()
     },
     selectBubleQuestion (e) {
       let li = e.target
@@ -256,8 +269,6 @@ export default {
         return false
       }
 
-      console.log(this.resultData)
-
       if (this.questions.length <= this.paginationNumber) {
         return false
       }
@@ -267,7 +278,9 @@ export default {
       let index = this.paginationNumber - 1
       this.currentQuestion = this.questions[index]
 
-      // clear answers user
+      this.clearAnswersUser()
+    },
+    clearAnswersUser () {
       this.selectAnswer.oneAssoc = false
       this.selectAnswer.manyAssoc = []
       this.selectAnswer.word = ''
@@ -311,10 +324,12 @@ export default {
             return false
           }
 
-          this.resultData.push({
-            question_id: this.currentQuestion.id,
-            answer_id: this.selectAnswer.oneAssoc
-          })
+          this.saveDbAnswers(this.selectAnswer.oneAssoc)
+
+          // this.resultData.push({
+          //   question_id: this.currentQuestion.id,
+          //   answer_id: this.selectAnswer.oneAssoc
+          // })
 
           break
 
@@ -325,10 +340,12 @@ export default {
             return false
           }
 
-          this.resultData.push({
-            question_id: this.currentQuestion.id,
-            answer_id: this.selectAnswer.manyAssoc
-          })
+          this.saveDbAnswers(this.selectAnswer.manyAssoc)
+
+          // this.resultData.push({
+          //   question_id: this.currentQuestion.id,
+          //   answer_id: this.selectAnswer.manyAssoc
+          // })
 
           break
 
@@ -339,7 +356,12 @@ export default {
             return false
           }
 
-          console.log(this.associations)
+          this.saveDbAnswers(this.associations)
+
+          // this.resultData.push({
+          //   question_id: this.currentQuestion.id,
+          //   associations: this.associations
+          // })
 
           break
 
@@ -350,28 +372,35 @@ export default {
             return false
           }
 
-          this.resultData.push({
-            question_id: this.currentQuestion.id,
-            word: this.selectAnswer.word
-          })
+          this.saveDbAnswers(this.selectAnswer.word)
+
+          // this.resultData.push({
+          //   question_id: this.currentQuestion.id,
+          //   word: this.selectAnswer.word
+          // })
 
           break
       }
 
       return true
+    },
+    saveDbAnswers (answers) {
+      api.addAnswerEntant({
+        id_question: this.currentQuestion.id,
+        id_entrant: this.entrant.id,
+        answers: answers
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(resErr => {
+          console.log('Помилка в блоці catch: ', resErr)
+        })
     }
   },
   computed: {
     getServerName () {
       return config.serverNameDomain
-    }
-  },
-  watch: {
-    selectAnswer: {
-      handler () {
-        // console.log(this.selectAnswer)
-      },
-      deep: true
     }
   },
   created () {
