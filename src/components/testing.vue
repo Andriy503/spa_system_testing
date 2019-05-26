@@ -39,8 +39,8 @@
 
                 <!-- One Assoc -->
                 <div v-if="currentQuestion.id_type === 1">
-                  <input type="radio" :value="answer.id" :name="'oneAssoc_' + currentQuestion.id" v-model="selectAnswer.oneAssoc">
-                  <label>
+                  <input type="radio" :value="answer.id" :id="'oneAssoc_' + answer.id" :name="'oneAssoc_' + currentQuestion.id" v-model="selectAnswer.oneAssoc">
+                  <label :for="'oneAssoc_' + answer.id">
                     {{ answer.title }}
                   </label>
                 </div>
@@ -90,7 +90,8 @@
                   class="form-control"
                   placeholder="Введіть відповідь"
                   rows="4"
-                ></textarea>
+                  v-model="selectAnswer.word"
+                  ></textarea>
                 </div>
 
               </div>
@@ -158,7 +159,8 @@ export default {
       // logic
       selectAnswer: {
         oneAssoc: false,
-        manyAssoc: []
+        manyAssoc: [],
+        word: ''
       }
     }
   },
@@ -196,6 +198,9 @@ export default {
       // clear answers user
       this.selectAnswer.oneAssoc = false
       this.selectAnswer.manyAssoc = []
+      this.selectAnswer.word = ''
+
+      this.clearAssoc()
     },
     selectBubleQuestion (e) {
       let li = e.target
@@ -256,6 +261,37 @@ export default {
       // clear answers user
       this.selectAnswer.oneAssoc = false
       this.selectAnswer.manyAssoc = []
+      this.selectAnswer.word = ''
+
+      this.clearAssoc()
+    },
+    clearAssoc () {
+      let ulQuestionsAssoc = document.getElementById('ul-block-one')
+      let ulAnswersAssoc = document.getElementById('ul-block-two')
+
+      if (!ulQuestionsAssoc || !ulAnswersAssoc) {
+        return false
+      }
+
+      this.associations = []
+      this.activeOneLi = {}
+
+      this.isOneTableToClick = false
+      this.isTwoTableToClick = false
+
+      this.colors.forEach(i => {
+        i.isAvailable = true
+      })
+
+      for (let i = 0; i < ulQuestionsAssoc.children.length; i++) {
+        ulQuestionsAssoc.children[i].style.borderColor = ''
+        ulQuestionsAssoc.children[i].style.borderLeftWidth = ''
+      }
+
+      for (let i = 0; i < ulAnswersAssoc.children.length; i++) {
+        ulAnswersAssoc.children[i].style.borderColor = ''
+        ulAnswersAssoc.children[i].style.borderLeftWidth = ''
+      }
     }
   },
   computed: {
