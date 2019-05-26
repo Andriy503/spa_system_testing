@@ -102,7 +102,7 @@
 
           <!-- btn next and back -->
           <div class="test-control">
-            <button class="test-control-btn" @click="nextPagination">
+            <button class="test-control-btn" @click="nextPaginationSaveAnswer">
               Далі
             </button>
           </div>
@@ -161,7 +161,8 @@ export default {
         oneAssoc: false,
         manyAssoc: [],
         word: ''
-      }
+      },
+      resultData: []
     }
   },
   methods: {
@@ -173,8 +174,6 @@ export default {
           if (res.data.success) {
             this.questions = res.data.data.questions
             this.ticket = res.data.data.ticket
-
-            console.log(this.questions)
 
             this.currentQuestion = this.questions[0]
           } else {
@@ -190,6 +189,10 @@ export default {
         })
     },
     changeNumberPagination (number) {
+      console.log(this.resultData)
+
+      console.log(this.currentQuestion)
+
       this.paginationNumber = number
 
       let index = number - 1
@@ -243,12 +246,18 @@ export default {
 
       this.associations.push(
         {
-          idTableOne: this.activeOneLi.value,
-          idTableTwo: li.value
+          question_id: this.activeOneLi.value,
+          answer_id: li.value
         }
       )
     },
-    nextPagination () {
+    nextPaginationSaveAnswer () {
+      if (!this.checkValidSelectAnswerAndSave()) {
+        return false
+      }
+
+      console.log(this.resultData)
+
       if (this.questions.length <= this.paginationNumber) {
         return false
       }
@@ -292,6 +301,64 @@ export default {
         ulAnswersAssoc.children[i].style.borderColor = ''
         ulAnswersAssoc.children[i].style.borderLeftWidth = ''
       }
+    },
+    checkValidSelectAnswerAndSave () {
+      switch (this.currentQuestion.id_type) {
+        case 1:
+          if (!this.selectAnswer.oneAssoc) {
+            toastr.error('Виберіть відповідь!')
+
+            return false
+          }
+
+          this.resultData.push({
+            question_id: this.currentQuestion.id,
+            answer_id: this.selectAnswer.oneAssoc
+          })
+
+          break
+
+        case 2:
+          if (isEmpty(this.selectAnswer.manyAssoc)) {
+            toastr.error('Виберіть відповіді!')
+
+            return false
+          }
+
+          this.resultData.push({
+            question_id: this.currentQuestion.id,
+            answer_id: this.selectAnswer.manyAssoc
+          })
+
+          break
+
+        case 3:
+          if (isEmpty(this.associations) || this.associations.length !== 4) {
+            toastr.error('Виберіть всі асоціації!')
+
+            return false
+          }
+
+          console.log(this.associations)
+
+          break
+
+        case 4:
+          if (isEmpty(this.selectAnswer.word)) {
+            toastr.error('Введіть відповідь!')
+
+            return false
+          }
+
+          this.resultData.push({
+            question_id: this.currentQuestion.id,
+            word: this.selectAnswer.word
+          })
+
+          break
+      }
+
+      return true
     }
   },
   computed: {
@@ -302,7 +369,7 @@ export default {
   watch: {
     selectAnswer: {
       handler () {
-        console.log(this.selectAnswer)
+        // console.log(this.selectAnswer)
       },
       deep: true
     }
