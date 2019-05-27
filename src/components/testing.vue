@@ -173,20 +173,29 @@ export default {
         .then(res => {
           if (res.data.success) {
             let data = res.data.data
+
             this.questions = data.questions
             this.ticket = data.ticket
 
+            let pointQuestion = this.questions[0]
+
             if (!isEmpty(data.entrant_answers)) {
-              // this.resultData.push({
-              //   question_id: this.currentQuestion.id,
-              //   answer_id: this.selectAnswer.oneAssoc
-              // })
-              data.entrant_answers.forEach(item => {
-                console.log(item)
-              })
+              this.resultData = data.entrant_answers
+
+              // search не проходженого питанння
+              for (let item in this.questions) {
+                let res = this.resultData.find(i => i.id_question === this.questions[item].id)
+
+                if (!res) {
+                  pointQuestion = this.questions[item]
+                  this.paginationNumber = parseInt(item) + 1
+
+                  break
+                }
+              }
             }
 
-            this.currentQuestion = this.questions[0]
+            this.currentQuestion = pointQuestion
           } else {
             toastr.error(res.data.message)
             this.$router.push('/access-entrants')
@@ -203,7 +212,7 @@ export default {
       let nextQuestion = this.questions[number - 1]
 
       // find select answer
-      let isIssetUserAnswer = this.resultData.find(i => i.question_id === nextQuestion.id)
+      let isIssetUserAnswer = this.resultData.find(i => i.id_question === nextQuestion.id)
 
       if (isIssetUserAnswer) {
         return false
@@ -259,8 +268,8 @@ export default {
 
       this.associations.push(
         {
-          question_id: this.activeOneLi.value,
-          answer_id: li.value
+          id_question: this.activeOneLi.value,
+          id_answer: li.value
         }
       )
     },
@@ -326,10 +335,10 @@ export default {
 
           this.saveDbAnswers(this.selectAnswer.oneAssoc)
 
-          // this.resultData.push({
-          //   question_id: this.currentQuestion.id,
-          //   answer_id: this.selectAnswer.oneAssoc
-          // })
+          this.resultData.push({
+            id_question: this.currentQuestion.id,
+            id_answer: this.selectAnswer.oneAssoc
+          })
 
           break
 
@@ -342,10 +351,10 @@ export default {
 
           this.saveDbAnswers(this.selectAnswer.manyAssoc)
 
-          // this.resultData.push({
-          //   question_id: this.currentQuestion.id,
-          //   answer_id: this.selectAnswer.manyAssoc
-          // })
+          this.resultData.push({
+            id_question: this.currentQuestion.id,
+            id_answer: this.selectAnswer.manyAssoc
+          })
 
           break
 
@@ -358,10 +367,10 @@ export default {
 
           this.saveDbAnswers(this.associations)
 
-          // this.resultData.push({
-          //   question_id: this.currentQuestion.id,
-          //   associations: this.associations
-          // })
+          this.resultData.push({
+            id_question: this.currentQuestion.id,
+            associations: this.associations
+          })
 
           break
 
@@ -374,10 +383,10 @@ export default {
 
           this.saveDbAnswers(this.selectAnswer.word)
 
-          // this.resultData.push({
-          //   question_id: this.currentQuestion.id,
-          //   word: this.selectAnswer.word
-          // })
+          this.resultData.push({
+            id_question: this.currentQuestion.id,
+            word: this.selectAnswer.word
+          })
 
           break
       }
@@ -391,7 +400,6 @@ export default {
         answers: answers
       })
         .then(res => {
-          console.log(res)
         })
         .catch(resErr => {
           console.log('Помилка в блоці catch: ', resErr)
