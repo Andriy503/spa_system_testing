@@ -34,7 +34,8 @@
   margin-bottom: 1rem;
   color: #5b5b5b;
 }
-.navi-btn.active {
+
+.active {
   background-color: #f8ab47;
   color: white !important;
 }
@@ -196,4 +197,12 @@
 
 .q-img-testing {
   max-width: 80%;
+}
+
+.passed {
+  border: 2px solid #bababa;
+}
+
+.passed:hover {
+  cursor: not-allowed !important;
 }

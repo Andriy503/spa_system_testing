@@ -12,7 +12,10 @@
           <div class="test-navigation">
             <button
               class="navi-btn"
-              :class="{'active': paginationNumber === i}"
+              :class="{
+                'active': paginationNumber === i,
+                'passed': isPassEntrant(i)
+              }"
               v-for="(i, index) in questions.length"
               :key="index"
               @click="changeNumberPagination(i)"
@@ -278,16 +281,33 @@ export default {
         return false
       }
 
-      if (this.questions.length <= this.paginationNumber) {
+      this.clearAnswersUser()
+
+      let isTrue = true
+      let index = this.paginationNumber
+
+      if (this.resultData.length === this.questions.length) {
+        this.finishTesting()
+
         return false
       }
 
-      this.paginationNumber++
+      while (isTrue) {
+        if (index >= this.questions.length) {
+          index = 0
+        }
 
-      let index = this.paginationNumber - 1
-      this.currentQuestion = this.questions[index]
+        let isPassed = this.resultData.find(i => i.id_question === this.questions[index].id)
 
-      this.clearAnswersUser()
+        if (!isPassed) {
+          this.currentQuestion = this.questions[index]
+          this.paginationNumber = index + 1
+
+          isTrue = false
+        }
+
+        index++
+      }
     },
     clearAnswersUser () {
       this.selectAnswer.oneAssoc = false
@@ -404,6 +424,15 @@ export default {
         .catch(resErr => {
           console.log('Помилка в блоці catch: ', resErr)
         })
+    },
+    isPassEntrant (index) {
+      let indexQuestion = index - 1
+      let findQuestionPass = this.resultData.find(i => i.id_question === this.questions[indexQuestion].id)
+
+      return findQuestionPass
+    },
+    finishTesting () {
+      console.log('finishTesting')
     }
   },
   computed: {
