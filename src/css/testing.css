@@ -206,3 +206,8 @@
 .passed:hover {
   cursor: not-allowed !important;
 }
+
+.block-time {
+  position: absolute;
+  right: 0;
+}

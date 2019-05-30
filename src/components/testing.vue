@@ -4,6 +4,10 @@
     <preLoader v-if="preLoader"></preLoader>
 
     <div class="content-testing" v-else>
+      <!-- timer -->
+      <div class="block-time">
+        <span>Тут має іти таймер!</span>
+      </div>
       <div class="test-page">
         <h1 class="test-title text-center2">{{ ticket.title }}</h1>
         <div class="test-container">
