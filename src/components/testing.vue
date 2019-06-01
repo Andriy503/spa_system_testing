@@ -253,7 +253,7 @@ export default {
       if (!findColor) return false
 
       li.style.borderColor = findColor.color
-      li.style.borderLeftWidth = '5px'
+      li.style.borderRightWidth = '5px'
 
       this.activeOneLi.color = findColor.color
       this.activeOneLi.value = li.value
@@ -449,7 +449,18 @@ export default {
         this.setCookieTimer(this.ticket.time_of_passing * 60)
       }
 
+      var pointTime = (time) => {
+        let minutes = parseInt(timer / 60, 10)
+        let seconds = parseInt(timer % 60, 10)
+
+        let minutesD = minutes < 10 ? '0' + minutes : minutes
+        let secondsD = seconds < 10 ? '0' + seconds : seconds
+
+        return minutesD + ':' + secondsD
+      }
+
       var timer = this.getCookie('timer')
+      this.timer = pointTime(timer)
 
       var intervar = setInterval(() => {
         let minutes = parseInt(timer / 60, 10)
