@@ -133,15 +133,6 @@
                 id="titleArea"
               ></textarea>
 
-              <!-- rating -->
-              <label for="basic-url">Рейтинг питання</label>
-              <select v-model="form.rating" class="form-control" id="titleArea">
-                <option value=""></option>
-                <option v-for="i in 3" :key="i">
-                  {{ i }}
-                </option>
-              </select>
-
               <!-- type -->
               <label for="basic-url">Тип питання</label>
               <select class="form-control" v-model="form.id_type" id="titleArea">
@@ -212,7 +203,6 @@ export default {
       form: {
         title: '',
         pre_img: [],
-        rating: 0,
         points: '',
         id_type: 0
       },
@@ -313,7 +303,6 @@ export default {
         this.form = {
           title: '',
           pre_img: [],
-          rating: 0,
           points: '',
           id_type: 0
         }
@@ -328,13 +317,12 @@ export default {
     validForm () {
       let field = {
         title: '`Заголовок`',
-        rating: '`Рейтинг`',
         points: '`Кількість балів`',
         id_type: '`Тип питання`'
       }
 
       for (let item in this.form) {
-        if (~['title', 'rating', 'points', 'id_type'].indexOf(item)) {
+        if (~['title', 'points', 'id_type'].indexOf(item)) {
           if (!this.form[item]) {
             toastr.error('Поле ' + field[item] + ' не може бути пустим!')
             return false
