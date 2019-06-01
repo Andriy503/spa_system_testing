@@ -208,6 +208,6 @@
 }
 
 .block-time {
-  position: absolute;
-  right: 0;
+  position: fixed;
+  right: 30px;
 }

@@ -6,7 +6,7 @@
     <div class="content-testing" v-else>
       <!-- timer -->
       <div class="block-time">
-        <span>Тут має іти таймер!</span>
+        <i class="far fa-clock"></i> <span id="time">{{ timer }}</span>
       </div>
       <div class="test-page">
         <h1 class="test-title text-center2">{{ ticket.title }}</h1>
@@ -169,7 +169,8 @@ export default {
         manyAssoc: [],
         word: ''
       },
-      resultData: []
+      resultData: [],
+      timer: ''
     }
   },
   methods: {
@@ -203,6 +204,9 @@ export default {
             }
 
             this.currentQuestion = pointQuestion
+
+            // start timer
+            this.startTimer()
           } else {
             toastr.error(res.data.message)
             this.$router.push('/access-entrants')
@@ -437,6 +441,45 @@ export default {
     },
     finishTesting () {
       console.log('finishTesting')
+
+      this.deleteCookie()
+    },
+    startTimer () {
+      if (!this.getCookie('timer')) {
+        this.setCookieTimer(this.ticket.time_of_passing * 60)
+      }
+
+      var timer = this.getCookie('timer')
+
+      var intervar = setInterval(() => {
+        let minutes = parseInt(timer / 60, 10)
+        let seconds = parseInt(timer % 60, 10)
+
+        let minutesD = minutes < 10 ? '0' + minutes : minutes
+        let secondsD = seconds < 10 ? '0' + seconds : seconds
+
+        this.timer = minutesD + ':' + secondsD
+
+        if (--timer < 0) {
+          clearInterval(intervar)
+
+          this.finishTesting()
+        }
+
+        this.setCookieTimer(timer)
+      }, 1000)
+    },
+    setCookieTimer (time) {
+      var date = new Date(new Date().getTime() + 4 * 60 * 60 * 1000) // 4 hours
+      document.cookie = 'timer=' + time + '; path=/; expires=' + date.toUTCString()
+    },
+    getCookie (name) {
+      var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'))
+      if (match) return match[2]
+    },
+    deleteCookie () {
+      var date = new Date(0)
+      document.cookie = 'name=; path=/; expires=' + date.toUTCString()
     }
   },
   computed: {

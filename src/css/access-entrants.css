@@ -1,9 +1,10 @@
 .wrapper-access-entrants {
   height: 100%;
   width: 100%;
-  background-image: url('https://htmlcolorcodes.com/assets/images/html-color-codes-color-tutorials-hero-00e10b1f.jpg');
+  background-image: url('https://cs4.pikabu.ru/post_img/big/2016/08/16/11/147137174019542083.jpg');
   background-repeat: no-repeat;
   background-size: 100% 100%;
+  /* background-color: #d8d8d8; */
   position: absolute;
   overflow: hidden;
 }
