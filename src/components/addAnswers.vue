@@ -62,6 +62,10 @@
                 id="inp-add-answer"
                 v-model="form.title"
               ></textarea>
+              <div class="custom-file" id="block-load-image" v-if="question.id_type === 1">
+                <input type="file" class="custom-file-input" id="customFile" @change="onLoadFile">
+                <label class="custom-file-label" for="customFile" id="title-file-cust">{{ titleFile }}</label>
+              </div>
             </form>
 
             <!-- checkbox -->
@@ -84,8 +88,15 @@
                   id="li-answers-group"
                   :class="{'active-li-answer-true' : answer.current_answer || question.id_type === 4}"
                 >
-                  {{ answer.title }}
+                  {{ (answer.title) ? answer.title : '-' }}
                   <div class="action-answer-in-div">
+                    <i
+                      v-if="answer.pre_img"
+                      class="far fa-eye"
+                      title="Переглянути фото"
+                      id="icon-ans-view-img"
+                      @click="showImage(answer.pre_img)"
+                    ></i>
                     <i
                       class="far fa-edit"
                       id="icon-ans-edit"
@@ -192,7 +203,7 @@ export default {
   name: 'addAnswers',
   data () {
     return {
-      hash: '',
+      hash: 'q5cef8ae74ec2c2.65427466',
       preLoader: false,
       question: {},
       answers: [],
@@ -222,7 +233,9 @@ export default {
           a_answer: ''
         }
       ],
-      isExistBundle: false
+      isExistBundle: false,
+      titleFile: 'Зображення не вибрано',
+      pre_img: []
     }
   },
   methods: {
@@ -280,7 +293,7 @@ export default {
         })
     },
     addAnswer () {
-      if (isEmpty(this.form.title)) {
+      if (isEmpty(this.form.title) && isEmpty(this.pre_img)) {
         toastr.error('Поле не може бути пустим!')
 
         return false
@@ -288,11 +301,21 @@ export default {
 
       this.btnLoader = true
 
-      api.addAnswer({...this.form, id_question: this.question.id})
+      let data = this.appendDateForm({
+        ...this.form,
+        id_question: this.question.id,
+        pre_img: this.pre_img
+      })
+
+      api.addAnswer(data)
         .then(res => {
           if (res.data.success) {
             this.answers.push(res.data.data.answer)
             this.form.title = ''
+
+            // file
+            this.titleFile = 'Зображення не вибрано'
+            this.pre_img = []
 
             toastr.success(res.data.message)
           } else {
@@ -417,6 +440,41 @@ export default {
         .catch(resErr => {
           console.log('Помилка в блоці catch: ', resErr)
         })
+    },
+    onLoadFile (event) {
+      this.pre_img = event.target.files
+
+      this.titleFile = this.pre_img[0].name
+    },
+    appendDateForm (data) {
+      let fd = new FormData()
+
+      for (let item in data) {
+        if (item === 'pre_img') {
+          if (!isEmpty(data[item])) {
+            fd.append(item, data[item][0])
+          }
+
+          continue
+        } else if (item === 'current_answer') {
+          let isCurrentAnswer = '0'
+
+          if (data[item]) {
+            isCurrentAnswer = '1'
+          }
+
+          fd.append(item, isCurrentAnswer)
+
+          continue
+        }
+
+        fd.append(item, data[item])
+      }
+
+      return fd
+    },
+    showImage (pathImage) {
+      window.open(this.getServerName + pathImage)
     }
   },
   computed: {

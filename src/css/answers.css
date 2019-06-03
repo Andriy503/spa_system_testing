@@ -71,7 +71,11 @@
   color: #0073ef;
 }
 
-#icon-ans-delete, #icon-ans-edit {
+#icon-ans-view-img {
+  color: #0c7229;
+}
+
+#icon-ans-delete, #icon-ans-edit, #icon-ans-view-img {
   cursor: pointer;
 }
 
@@ -106,4 +110,12 @@
 #save-assoc-btn {
   float: right;
   margin-top: 10px;
+}
+
+#block-load-image {
+  margin-top: 10px;
+}
+
+#customFile {
+  color: red;
 }

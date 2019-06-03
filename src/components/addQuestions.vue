@@ -148,7 +148,11 @@
 
               <!-- load img -->
               <label for="basic-url">Загрузка зображення</label>
-              <input type="file" @change="onLoadFile" id="inp-file">
+              <!-- <input type="file" @change="onLoadFile" id="inp-file" style="color:transparent;"> -->
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile" @change="onLoadFile">
+                <label class="custom-file-label" for="customFile" id="title-file-cust">{{ titleFileLable }}</label>
+              </div>
 
             </div>
             <div class="modal-footer">
@@ -225,7 +229,8 @@ export default {
         }
       ],
       activeImg: '',
-      valueInputFile: ''
+      valueInputFile: '',
+      titleFileLable: 'Зображення не вибрано'
     }
   },
   methods: {
@@ -308,11 +313,12 @@ export default {
         }
       }
 
-      let file = document.getElementById('inp-file')
-      file.value = ''
+      this.titleFileLable = 'Зображення не вибрано'
     },
     onLoadFile (event) {
       this.form.pre_img = event.target.files[0]
+
+      this.titleFileLable = this.form.pre_img.name
     },
     validForm () {
       let field = {
@@ -424,7 +430,7 @@ export default {
   },
   created () {
     // !delete
-    // this.activeIdTicket = 1
+    // this.activeIdTicket = 4
 
     window.addEventListener('click', this.bindWindowClick)
   }
