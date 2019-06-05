@@ -119,3 +119,20 @@
 #customFile {
   color: red;
 }
+
+/* .form-comp-assoc > input[type='file'] {
+  color:transparent;
+} */
+
+#test-inp {
+  display: none;
+}
+
+.label-file-bundle {
+  margin-left: 5px;
+}
+
+.bundle-answer {
+  float: right;
+  margin-right: 5px;
+}

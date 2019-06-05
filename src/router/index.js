@@ -6,6 +6,7 @@ import cabinet from '@/components/cabinet'
 import departaments from '@/components/departaments'
 import accessEntrants from '@/components/accessEntrants'
 import testing from '@/components/testing'
+import finishPage from '@/components/finishPage'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/testing',
       name: 'testing',
       component: testing
+    },
+    {
+      path: '/result',
+      name: 'result',
+      component: finishPage
     }
   ]
 })

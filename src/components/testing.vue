@@ -440,9 +440,22 @@ export default {
       return findQuestionPass
     },
     finishTesting () {
-      console.log('finishTesting')
+      console.log('finish')
 
-      this.deleteCookie()
+      this.$router.push('result')
+
+      // delete item store entant
+      // this.deleteCookie() delete timer
+
+      // тут перехід на фінальну сторінку
+
+      api.resultTesting(this.resultData)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(resErr => {
+          console.log('Помилка в блоці catch', resErr)
+        })
     },
     startTimer () {
       if (!this.getCookie('timer')) {

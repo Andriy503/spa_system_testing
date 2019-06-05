@@ -119,15 +119,28 @@
           </div>
           <div v-else-if="question.id_type === 3" class="main-wrapper-asnwers">
             <div class="form-comp-assoc">
+
+              <!-- bundles 1 -->
               <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[0].a_question">
               <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[0].a_answer">
+              <!-- <label class="btn btn-success label-file-bundle">
+                <input type="file" id="test-inp">
+                <i class="fas fa-upload"></i>
+              </label>
+              <label class="btn btn-primary bundle-answer">
+                <input type="file" id="test-inp">
+                Загрузити фото
+              </label><br> -->
 
+              <!-- bundles 2 -->
               <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[1].a_question">
               <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[1].a_answer">
 
+              <!-- bundles 3 -->
               <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[2].a_question">
               <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[2].a_answer">
 
+              <!-- bundles 4 -->
               <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[3].a_question">
               <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[3].a_answer">
 
@@ -203,7 +216,7 @@ export default {
   name: 'addAnswers',
   data () {
     return {
-      hash: 'q5cef8ae74ec2c2.65427466',
+      hash: 'q5cf509cf7e5cb9.42532436',
       preLoader: false,
       question: {},
       answers: [],
