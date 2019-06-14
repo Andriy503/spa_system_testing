@@ -170,7 +170,8 @@ export default {
         word: ''
       },
       resultData: [],
-      timer: ''
+      timer: '',
+      interval: null
     }
   },
   methods: {
@@ -440,14 +441,14 @@ export default {
       return findQuestionPass
     },
     finishTesting () {
-      console.log('finish')
-
-      this.$router.push('result')
+      // delete cookies and interval
+      clearInterval(this.interval)
+      this.deleteCokie('timer')
 
       // delete item store entant
-      // this.deleteCookie() delete timer
+      localStorage.removeItem('entrant')
 
-      // тут перехід на фінальну сторінку
+      this.$router.push('result') // this is referer final page
 
       api.resultTesting(this.resultData)
         .then(res => {
@@ -456,6 +457,9 @@ export default {
         .catch(resErr => {
           console.log('Помилка в блоці catch', resErr)
         })
+    },
+    deleteCokie (name) {
+      document.cookie = name + '=; Max-Age=-99999999;'
     },
     startTimer () {
       if (!this.getCookie('timer')) {
@@ -475,7 +479,7 @@ export default {
       var timer = this.getCookie('timer')
       this.timer = pointTime(timer)
 
-      var intervar = setInterval(() => {
+      this.interval = setInterval(() => {
         let minutes = parseInt(timer / 60, 10)
         let seconds = parseInt(timer % 60, 10)
 
@@ -485,7 +489,7 @@ export default {
         this.timer = minutesD + ':' + secondsD
 
         if (--timer < 0) {
-          clearInterval(intervar)
+          clearInterval(this.interval)
 
           this.finishTesting()
         }

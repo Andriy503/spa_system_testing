@@ -123,14 +123,14 @@
               <!-- bundles 1 -->
               <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[0].a_question">
               <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[0].a_answer">
-              <!-- <label class="btn btn-success label-file-bundle">
+              <label class="btn btn-success label-file-bundle">
                 <input type="file" id="test-inp">
                 <i class="fas fa-upload"></i>
               </label>
               <label class="btn btn-primary bundle-answer">
                 <input type="file" id="test-inp">
                 Загрузити фото
-              </label><br> -->
+              </label><br>
 
               <!-- bundles 2 -->
               <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[1].a_question">
