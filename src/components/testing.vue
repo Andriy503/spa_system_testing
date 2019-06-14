@@ -450,7 +450,7 @@ export default {
 
       this.$router.push('result') // this is referer final page
 
-      api.resultTesting(this.resultData)
+      api.resultTesting(this.entrant.id)
         .then(res => {
           console.log(res)
         })

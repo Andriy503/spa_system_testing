@@ -165,7 +165,7 @@ export default {
   addAnswerEntant (data) {
     return axios.post('addAnswerEntant.json', data)
   },
-  resultTesting (data) {
-    return axios.post('resultTesting.json', data)
+  resultTesting (id) {
+    return axios.get('resultTesting.json?id_entrant=' + id)
   }
 }
