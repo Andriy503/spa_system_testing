@@ -114,6 +114,7 @@
 
 #block-load-image {
   margin-top: 10px;
+  z-index: 0;
 }
 
 #customFile {
@@ -124,15 +125,21 @@
   color:transparent;
 } */
 
-#test-inp {
+.input-load-file {
   display: none;
 }
 
-.label-file-bundle {
-  margin-left: 5px;
+.bundle-answer {
+  float: right;
+  margin-right: 5px;
 }
 
-.bundle-answer {
+.block-load-file {
+  margin-left: 5px;
+  margin-bottom: 10px;;
+}
+
+.block-load-file > #answer-load-file {
   float: right;
   margin-right: 5px;
 }

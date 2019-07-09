@@ -147,8 +147,8 @@ export default {
   data () {
     return {
       form: {
-        first_name: 'Андрій',
-        last_name: 'Соколовський',
+        first_name: '',
+        last_name: '',
         age: ''
       },
       btnLoader: false,

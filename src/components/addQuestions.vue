@@ -358,8 +358,11 @@ export default {
     appendDateForm () {
       let fd = new FormData()
 
+      console.log(this.form.pre_img.length)
+
       for (let item in this.form) {
-        if (item === 'pre_img' && this.form[item]) {
+        // if (item === 'pre_img' && this.form[item]) {
+        if (item === 'pre_img' && this.form.pre_img.length !== 0) {
           fd.append('image', this.form[item], this.form[item].name)
 
           continue
@@ -430,7 +433,7 @@ export default {
   },
   created () {
     // !delete
-    // this.activeIdTicket = 4
+    this.activeIdTicket = 1
 
     window.addEventListener('click', this.bindWindowClick)
   }

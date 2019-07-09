@@ -167,5 +167,8 @@ export default {
   },
   resultTesting (id) {
     return axios.get('resultTesting.json?id_entrant=' + id)
+  },
+  multipleSavedImages (data) {
+    return axios.post('multipleSavedImages.json', data)
   }
 }

@@ -3,7 +3,7 @@
     <div class="result-content">
       <h1>Тестування завершено</h1>
       <h2>Повідомте вчителя!</h2>
-      <button class="btn btn-primary">Завантажити результат</button>
+      <!-- <button class="btn btn-primary">Завантажити результат</button> -->
     </div>
     <vue-particles
         color="#494949"
