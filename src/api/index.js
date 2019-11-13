@@ -1,6 +1,6 @@
 import axios from 'axios'
 // import toastr from 'toastr'
-import store from '@/store'
+// import store from '@/store'
 import config from '@/default_config'
 
 axios.defaults.baseURL = config.serverName
@@ -31,7 +31,7 @@ axios.interceptors.response.use(function (response) {
   // store.dispatch('user/authResponse', false)
   // store.commit('user/fillAuthUser', {})
 
-  store.dispatch('user/redirect', 'login')
+  // store.dispatch('user/redirect', 'login')
 
   return Promise.reject(error)
 })

@@ -53,12 +53,12 @@ export default {
     return {
       myComponents: {
         addQuestions: false,
-        addAnswers: false,
+        addAnswers: true,
         addAdminUsers: false,
         addTickets: false,
         educations: false,
         cpecialty: false,
-        entrants: true
+        entrants: false
       },
       authUser: {}
     }

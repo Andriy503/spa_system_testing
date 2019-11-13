@@ -120,21 +120,63 @@
           <div v-else-if="question.id_type === 3" class="main-wrapper-asnwers">
             <div class="form-comp-assoc">
 
-              <!-- bundles 1 -->
-              <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[0].a_question">
-              <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[0].a_answer">
+              <div class="assoc-form-component">
+                <!-- bundles 1 -->
+                <div class="assoc-bundle-content">
+                  <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[0].a_question">
+                  <div class="file btn btn-lg btn-primary divv question-block-assoc">
+                    <i class="fas fa-file-upload"></i>
+                    <input type="file" name="file" class="input" @change="multipleLoadFile($event, 0)" />
+                  </div>
+                  <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[0].a_answer">
+                  <div class="file btn btn-lg btn-primary divv">
+                    <i class="fas fa-file-upload"></i>
+                    <input type="file" name="file" class="input" @change="multipleLoadFile($event, 0, 'a_pre_img')"/>
+                  </div>
+                </div>
 
-              <!-- bundles 2 -->
-              <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[1].a_question">
-              <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[1].a_answer">
+                <!-- bundles 2 -->
+                <div class="assoc-bundle-content">
+                  <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[1].a_question">
+                  <div class="file btn btn-lg btn-primary divv question-block-assoc">
+                    <i class="fas fa-file-upload"></i>
+                    <input type="file" name="file" class="input" @change="multipleLoadFile($event, 1)" />
+                  </div>
+                  <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[1].a_answer">
+                  <div class="file btn btn-lg btn-primary divv">
+                    <i class="fas fa-file-upload"></i>
+                    <input type="file" name="file" class="input" @change="multipleLoadFile($event, 1, 'a_pre_img')" />
+                  </div>
+                </div>
 
-              <!-- bundles 3 -->
-              <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[2].a_question">
-              <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[2].a_answer">
+                <!-- bundles 3 -->
+                <div class="assoc-bundle-content">
+                  <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[2].a_question">
+                  <div class="file btn btn-lg btn-primary divv question-block-assoc">
+                    <i class="fas fa-file-upload"></i>
+                    <input type="file" name="file" class="input" @change="multipleLoadFile($event, 2)" />
+                  </div>
+                  <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[2].a_answer">
+                  <div class="file btn btn-lg btn-primary divv">
+                    <i class="fas fa-file-upload"></i>
+                    <input type="file" name="file" class="input" @change="multipleLoadFile($event, 2, 'a_pre_img')" />
+                  </div>
+                </div>
 
-              <!-- bundles 4 -->
-              <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[3].a_question">
-              <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[3].a_answer">
+                <!-- bundles 4 -->
+                <div class="assoc-bundle-content">
+                  <input type="text" class="form-control" placeholder="Питання" v-model="bundlesForm[3].a_question">
+                  <div class="file btn btn-lg btn-primary divv question-block-assoc">
+                    <i class="fas fa-file-upload"></i>
+                    <input type="file" name="file" class="input"  @change="multipleLoadFile($event, 3)" />
+                  </div>
+                  <input type="text" class="form-control" placeholder="Відповідь" v-model="bundlesForm[3].a_answer">
+                  <div class="file btn btn-lg btn-primary divv">
+                    <i class="fas fa-file-upload"></i>
+                    <input type="file" name="file" class="input"  @change="multipleLoadFile($event, 3, 'a_pre_img')" />
+                  </div>
+                </div>
+              </div>
 
               <button class="btn btn-success" id="save-assoc-btn" @click="saveBundles" v-if="!isExistBundle">
                 Зберегти
@@ -208,7 +250,7 @@ export default {
   name: 'addAnswers',
   data () {
     return {
-      hash: 'q5cf509cf7e5cb9.42532436',
+      hash: 'q5d0ca5c00ae085.76438657',
       preLoader: false,
       question: {},
       answers: [],
@@ -223,19 +265,31 @@ export default {
       bundlesForm: [
         {
           a_question: '',
-          a_answer: ''
+          a_answer: '',
+
+          a_pre_img: null,
+          q_pre_img: null
         },
         {
           a_question: '',
-          a_answer: ''
+          a_answer: '',
+
+          a_pre_img: null,
+          q_pre_img: null
         },
         {
           a_question: '',
-          a_answer: ''
+          a_answer: '',
+
+          a_pre_img: null,
+          q_pre_img: null
         },
         {
           a_question: '',
-          a_answer: ''
+          a_answer: '',
+
+          a_pre_img: null,
+          q_pre_img: null
         }
       ],
       isExistBundle: false,
@@ -262,19 +316,27 @@ export default {
             this.bundlesForm = [
               {
                 a_question: '',
-                a_answer: ''
+                a_answer: '',
+                a_pre_img: null,
+                q_pre_img: null
               },
               {
                 a_question: '',
-                a_answer: ''
+                a_answer: '',
+                a_pre_img: null,
+                q_pre_img: null
               },
               {
                 a_question: '',
-                a_answer: ''
+                a_answer: '',
+                a_pre_img: null,
+                q_pre_img: null
               },
               {
                 a_question: '',
-                a_answer: ''
+                a_answer: '',
+                a_pre_img: null,
+                q_pre_img: null
               }
             ]
 
@@ -398,58 +460,75 @@ export default {
     photoViewModal () {
       return document.querySelector('.photo-view-modal')
     }, // end view modal functions
-    saveBundles () {
+    async saveBundles () {
       for (let i = 0; i < this.bundlesForm.length; i++) {
-        if (isEmpty(this.bundlesForm[i].a_question) || isEmpty(this.bundlesForm[i].a_answer)) {
+        if ((this.bundlesForm[i].q_pre_img === null && isEmpty(this.bundlesForm[i].a_question)) ||
+          (this.bundlesForm[i].a_pre_img === null && isEmpty(this.bundlesForm[i].a_answer))
+        ) {
           toastr.error('Заповніть коректно форму!')
+
           return false
         }
       }
 
-      this.btnLoaderUpdate = true
+      var fd = new FormData()
 
-      api.addBundles({data: {...this.bundlesForm}, id_question: this.question.id})
-        .then(res => {
-          if (res.data.success) {
-            toastr.success(res.data.message)
-          } else {
-            toastr.error(res.data.message)
-          }
+      this.bundlesForm.forEach((bundle, index) => {
+        if (bundle.a_pre_img !== null) {
+          fd.append(`a_pre_img_${index}`, bundle.a_pre_img)
+        }
 
-          this.btnLoaderUpdate = false
-        })
-        .catch(resErr => {
-          console.log('Помилка в блоці catch: ', resErr)
-        })
+        if (bundle.q_pre_img !== null) {
+          fd.append(`q_pre_img_${index}`, bundle.q_pre_img)
+        }
+      })
+
+      fd.append('data', JSON.stringify(this.bundlesForm))
+      fd.append('id_question', JSON.stringify(this.question.id))
+
+      let response = await api.addBundles(fd)
+
+      if (response.data.success) {
+        toastr.success(response.data.message)
+      } else {
+        toastr.error(response.data.message)
+      }
     },
     updateBundles () {
-      for (let i = 0; i < this.bundlesForm.length; i++) {
-        if (isEmpty(this.bundlesForm[i].a_question) || isEmpty(this.bundlesForm[i].a_answer)) {
-          toastr.error('Заповніть коректно форму!')
-          return false
-        }
-      }
+      console.log(this.bundlesForm)
+      return false
 
-      this.btnLoaderUpdate = true
+      // for (let i = 0; i < this.bundlesForm.length; i++) {
+      //   if (isEmpty(this.bundlesForm[i].a_question) || isEmpty(this.bundlesForm[i].a_answer)) {
+      //     toastr.error('Заповніть коректно форму!')
+      //     return false
+      //   }
+      // }
 
-      api.updateBundle({data: this.bundlesForm})
-        .then(res => {
-          if (res.data.success) {
-            toastr.success(res.data.message)
-          } else {
-            toastr.error(res.data.message)
-          }
+      // this.btnLoaderUpdate = true
 
-          this.btnLoaderUpdate = false
-        })
-        .catch(resErr => {
-          console.log('Помилка в блоці catch: ', resErr)
-        })
+      // api.updateBundle({data: this.bundlesForm})
+      //   .then(res => {
+      //     if (res.data.success) {
+      //       toastr.success(res.data.message)
+      //     } else {
+      //       toastr.error(res.data.message)
+      //     }
+
+      //     this.btnLoaderUpdate = false
+      //   })
+      //   .catch(resErr => {
+      //     console.log('Помилка в блоці catch: ', resErr)
+      //   })
     },
     onLoadFile (event) {
       this.pre_img = event.target.files
 
       this.titleFile = this.pre_img[0].name
+    },
+    multipleLoadFile (event, index, name = 'q_pre_img') {
+      let file = event.target.files[0]
+      this.bundlesForm[index][name] = file
     },
     appendDateForm (data) {
       let fd = new FormData()
@@ -496,6 +575,8 @@ export default {
   },
   created () {
     window.addEventListener('click', this.bindWindowClick)
+
+    this.searchHash()
   },
   components: {
     preLoader

@@ -98,13 +98,27 @@
 }
 #formAddAssoc > input {
   margin-right: 10px;
-  /* width: 70px; */
 }
 
-.form-comp-assoc > input {
-  width: 49%;
-  float: left;
-  margin: 0.5%;
+.assoc-form-component {
+  display: flex;
+  flex-direction: column;
+}
+
+.assoc-form-component > div > input {
+  width: 50%;
+}
+
+.assoc-bundle-content {
+  margin-bottom: 10px;
+}
+
+.question-block-assoc {
+  margin-right: 10px;
+}
+
+.assoc-bundle-content {
+  display: flex;
 }
 
 #save-assoc-btn {
@@ -142,4 +156,17 @@
 .block-load-file > #answer-load-file {
   float: right;
   margin-right: 5px;
+}
+
+.divv {
+  position: relative;
+  overflow: hidden;
+  font-size: 14px !important;
+}
+.input {
+  position: absolute;
+  font-size: 16px;
+  opacity: 0;
+  right: 0;
+  top: 0;
 }
